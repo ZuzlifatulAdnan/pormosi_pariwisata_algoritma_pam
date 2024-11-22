@@ -1,5 +1,12 @@
 <?php
 
+use App\Http\Controllers\BerandaController;
+use App\Http\Controllers\BeritaController;
+use App\Http\Controllers\GaleriController;
+use App\Http\Controllers\KategoriBeritaController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ReviewController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -12,7 +19,20 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+Route::redirect('/', 'beranda');
+Route::get('/beranda', [BerandaController::class, 'index']);
+Route::get('/berita', [BeritaController::class, 'index']);
+Route::get('/review', [ReviewController::class, 'index']);
+Route::get('/review/input', [ReviewController::class, 'create']);
+Route::get('/galeri', [BerandaController::class, 'index']);
 
-Route::get('/', function () {
-    return view('welcome');
+Route::middleware(['auth'])->group(function () {
+    Route::get('/beranda', [BerandaController::class, 'index'])->name('dashboard');
+    Route::resource('profile',ProfileController ::class);
+    Route::resource('berita',BeritaController ::class);
+    Route::resource('kategori_berita',KategoriBeritaController ::class);
+    Route::resource('review',ReviewController ::class);
+    Route::resource('user',UserController ::class);
+    Route::resource('galeri',GaleriController ::class);
+    Route::resource('profile',ProfileController ::class);
 });
