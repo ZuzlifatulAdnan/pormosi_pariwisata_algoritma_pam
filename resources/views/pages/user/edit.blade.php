@@ -32,8 +32,9 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-body">
-                                <form action="{{ route('users.update', $user) }}" method="POST">
-                                    @method('PUT')
+                                <form action="{{ route('user.update', $user) }}" method="POST"
+                                    enctype="multipart/form-data">
+                                    @method('Patch')
                                     @csrf
                                     <div class="form-group">
                                         <label for="name" class="form-label">Name</label>
@@ -61,50 +62,28 @@
                                             </div>
                                         @enderror
                                     </div>
-                                    {{-- <div class="form-group">
+                                    <div class="form-group">
                                         <label for="password" class="form-label">Password</label>
                                         <input type="password" name="password" id="password"
                                             class="form-control @error('password') is-invalid
 
                                         @enderror"
-                                            placeholder="" required>
+                                            placeholder="">
                                         @error('password')
                                             <div class="invalid-feedback">
                                                 {{ $message }}
                                             </div>
                                         @enderror
                                     </div>
-
                                     <div class="form-group">
-                                        <label for="password_confirmation" class="form-label">Password Confirmation</label>
-                                        <input type="password" name="password_confirmation" id="password_confirmation"
-                                            class="form-control @error('password_confirmation') is-invalid
-
-                                        @enderror"
-                                            placeholder="" required>
-                                        @error('password_confirmation')
-                                            <div class="invalid-feedback">
-                                                {{ $message }}
-                                            </div>
+                                        <label for="image" class="form-label">Image</label> <br>
+                                        <img id="imagePreview" src="{{ $user->image ? asset('img/user/' . $user->image) : asset('assets/compiled/jpg/2.jpg') }}" 
+                                             class="form-image mb-3" width="100" height="100" data-toggle="tooltip" alt="Image Preview">
+                                        <input type="file" class="form-control @error('image') is-invalid @enderror" name="image" id="image" accept="image/*" onchange="previewImage(event)">
+                                        @error('image')
+                                            <div class="invalid-feedback">{{ $message }}</div>
                                         @enderror
-                                    </div> --}}
-
-                                    <div class="form-group col-md-12 mb-3">
-                                        <label class="form-label">Role</label>
-                                        <div class="selectgroup w-100">
-                                            <label class="selectgroup-item">
-                                                <input type="radio" name="roles" value="admin"
-                                                    class="selectgroup-input" {{ $user->role == 'admin' ? 'checked' : '' }}>
-                                                <span class="selectgroup-button">Admin</span>
-                                            </label>
-                                            <label class="selectgroup-item">
-                                                <input type="radio" name="roles" value="user"
-                                                    class="selectgroup-input" {{ $user->role == 'user' ? 'checked' : '' }}>
-                                                <span class="selectgroup-button">User</span>
-                                            </label>
-                                        </div>
                                     </div>
-
                                     <div class="form-group">
                                         <button type="submit" class="btn btn-primary">Simpan</button>
                                     </div>
@@ -129,4 +108,14 @@
 
 
     <!-- Page Specific JS File -->
+    <script>
+        function previewImage(event) {
+            const reader = new FileReader();
+            reader.onload = function() {
+                document.getElementById('imagePreview').src = reader.result; // Update the image preview
+            };
+            reader.readAsDataURL(event.target.files[0]); // Read the selected file as Data URL
+        }
+    </script>
+    
 @endpush

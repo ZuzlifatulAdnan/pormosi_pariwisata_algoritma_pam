@@ -14,7 +14,7 @@
             <div class="page-title">
                 <div class="row">
                     <div class="col-12 col-md-6 order-md-1 order-last">
-                        <h3>Profile</h3>
+                        <h3>Edit Profile</h3>
                         <p class="text-subtitle text-muted">Halaman tempat pengguna dapat mengubah informasi profil</p>
                     </div>
                     <div class="col-12 col-md-6 order-md-2 order-first">
@@ -35,19 +35,16 @@
                             <div class="card-body">
                                 <div class="d-flex justify-content-center align-items-center flex-column">
                                     <div class="avatar avatar-2xl">
-                                        <img src="{{ Auth::user()->image ? asset('img/user/' . Auth::user()->image) : asset('assets/compiled/jpg/2.jpg') }}" alt="Avatar" id="imagePreview">
+                                        <img src="{{ Auth::user()->image ? asset('img/user/' . Auth::user()->image) : asset('assets/compiled/jpg/2.jpg') }}" alt="Avatar">
                                     </div>
 
                                     <h3 class="mt-3">{{ Auth::user()->name }}</h3>
                                     {{-- <p class="text-small">{{ ucfirst(Auth::user()->role) }}</p> --}}
                                     <!-- Tambahkan Button Edit Data di bawah Nama -->
-                                    <a href="{{ route('profile.edit', Auth::user()) }}"
-                                        class="btn btn-primary mt-2 btn-block">
-                                        Edit Profile
+                                    <a href="{{ route('profile.index', Auth::user()) }}"
+                                        class="btn btn-warning mt-2 btn-block">
+                                        Profile
                                     </a>
-                                    <!-- Updated Button for Change Password -->
-                                    <a href="{{ route('profile.show', Auth::user()) }}"
-                                    class="btn btn-warning mt-2 btn-block">Ganti Password</a>
                                 </div>
                             </div>
                         </div>
@@ -55,23 +52,44 @@
                     <div class="col-12 col-lg-8">
                         <div class="card">
                             <div class="card-body">
-                                <form action="{{ route('profile.update', Auth::user()) }}" method="POST">
-                                    @method('Patch')
+                                <form action="{{ route('profile.change-password', Auth::user()) }}" method="POST" enctype="multipart/form-data">
                                     @csrf
                                     <div class="form-group">
-                                        <label for="name" class="form-label">Name</label>
-                                        <input type="text" name="name" id="name" class="form-control"
-                                            placeholder="Your Name" value="{{ Auth::user()->name }}" disabled>
+                                        <label for="current_password">Current Password</label>
+                                        <input type="password" name="current_password" id="current_password"
+                                               class="form-control @error('current_password') is-invalid @enderror" required>
+                                        @error('current_password')
+                                            <div class="invalid-feedback">
+                                                {{ $message }}
+                                            </div>
+                                        @enderror
                                     </div>
                                     <div class="form-group">
-                                        <label for="email" class="form-label">Email</label>
-                                        <input type="text" name="email" id="email" class="form-control"
-                                            placeholder="Your Email" value="{{ Auth::user()->email }}" disabled>
+                                        <label for="new_password">New Password</label>
+                                        <input type="password" name="new_password" id="new_password"
+                                               class="form-control @error('new_password') is-invalid @enderror" required>
+                                        @error('new_password')
+                                            <div class="invalid-feedback">
+                                                {{ $message }}
+                                            </div>
+                                        @enderror
                                     </div>
-                                    {{-- <div class="form-group">
+                                    <div class="form-group">
+                                        <label for="new_password_confirmation">Confirm New Password</label>
+                                        <input type="password" name="new_password_confirmation" id="new_password_confirmation"
+                                               class="form-control @error('new_password_confirmation') is-invalid @enderror" required>
+                                        @error('new_password_confirmation')
+                                            <div class="invalid-feedback">
+                                                {{ $message }}
+                                            </div>
+                                        @enderror
+                                    </div>
+                                    <!-- Submit button -->
+                                    <div class="form-group">
                                         <button type="submit" class="btn btn-primary">Save Changes</button>
-                                    </div> --}}
+                                    </div>
                                 </form>
+                                
                             </div>
                         </div>
                     </div>
@@ -82,14 +100,5 @@
 @endsection
 
 @push('scripts')
-    <!-- JS Libraies -->
-    {{-- <script src="{{ asset('assets/extensions/perfect-scrollbar/perfect-scrollbar.min.js') }}"></script> --}}
 
-
-    {{-- <script src="{{ asset('assets/compiled/js/app.js') }}"></script> --}}
-    {{-- <script src="{{ asset('assets/extensions/apexcharts/apexcharts.min.js') }}"></script>
-    <script src="{{ asset('assets/static/js/pages/dashboard.js') }}"></script> --}}
-
-
-    <!-- Page Specific JS File -->
 @endpush

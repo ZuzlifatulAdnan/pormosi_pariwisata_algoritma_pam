@@ -84,7 +84,7 @@
                                 </div>
                                 <div class="user-img d-flex align-items-center">
                                     <div class="avatar avatar-md">
-                                        <img src="{{ asset('assets/compiled/jpg/2.jpg') }}">
+                                        <img src="{{ Auth::user()->image ? asset('img/user/' . Auth::user()->image) : asset('assets/compiled/jpg/2.jpg') }}">
                                     </div>
                                 </div>
                             </div>
@@ -100,7 +100,7 @@
                             <li>
                                 <h6 class="dropdown-header">Hello, {{ $firstName }}</h6>
                             </li>
-                            <li><a class="dropdown-item" href="{{ route('account.index') }}"><i
+                            <li><a class="dropdown-item" href="{{ route('profile.index') }}"><i
                                         class="icon-mid bi bi-person me-2"></i>
                                     Profil Saya</a></li>
                             <hr class="dropdown-divider">

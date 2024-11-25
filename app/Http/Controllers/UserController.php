@@ -12,9 +12,9 @@ class UserController extends Controller
     public function index()
     {
         $type_menu = 'user';
-        $user = user::all();
+        $users = user::all();
 
-        return view('pages.user.index', compact('type_menu', 'user'));
+        return view('pages.user.index', compact('type_menu', 'users'));
     }
 
     public function create()
@@ -29,27 +29,29 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'name' => 'required',
-            'email' => 'required|email|unique:users,email',
-            'password' => 'required|min:8',
-            'image' => 'nullable|mimes:jpg,png,jpeg',
-
+        // Validate the incoming request
+        $validatedData = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email|max:255',
+            'password' => 'required|string|min:8|confirmed', // Ensure the password is confirmed
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048', // Optional image field
         ]);
 
-        User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make ($request->password),
-        ]);
+        // Handle the image upload if present
+        $imagePath = null;
         if ($request->hasFile('image')) {
             $image = $request->file('image');
-            $path = uniqid() . '.' . $image->getClientOriginalExtension();
-            $image->move('img/user/', $path);
-            User::create([
-                'image' => $path
-            ]);
+            $imagePath = uniqid() . '.' . $image->getClientOriginalExtension();
+            $image->move('img/user/', $imagePath);
         }
+
+        // Create the user
+        User::create([
+            'name' => $validatedData['name'],
+            'email' => $validatedData['email'],
+            'password' => Hash::make($validatedData['password']),
+            'image' => $imagePath, // Store the image path if available
+        ]);
         return Redirect::route('user.index')->with('success', ' User berhasil di tambah.');
     }
 

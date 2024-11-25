@@ -34,7 +34,7 @@
                 <div class="card">
                     <div class="card-header">
                         <h5 class="card-title">
-                            <a href="{{ route('users.create') }}">
+                            <a href="{{ route('user.create') }}">
                                 <button class="btn btn-primary">Tambah User</button>
                             </a>
                         </h5>
@@ -45,9 +45,9 @@
                                 <thead>
                                     <tr>
                                         <th>No</th>
+                                        <th class="text-center">Foto</th>
                                         <th>Name</th>
                                         <th>Email</th>
-                                        <th>Role</th>
                                         <th>Dibuat</th>
                                         <th>Action</th>
                                     </tr>
@@ -56,16 +56,20 @@
                                     @foreach ($users as $user)
                                         <tr>
                                             <td>{{ $loop->iteration }}</td>
+                                            <td class="text-center">
+                                                <img alt="image"
+                                                    src="{{ $user->image ? asset('img/user/' . $user->image) : asset('assets/compiled/jpg/2.jpg') }}"
+                                                    class="rounded-circle" width="35" height="35" data-toggle="tooltip">
+                                            </td>
                                             <td>{{ $user->name }}</td>
                                             <td>{{ $user->email }}</td>
-                                            <td>{{ ucfirst($user->role) }}</td>
                                             <td>{{ $user->created_at }}</td>
                                             <td>
                                                 <div class="d-flex justify-content-center">
-                                                    <a href="{{ route('users.show', $user) }}"
+                                                    <a href="{{ route('user.edit', $user) }}"
                                                         class="btn btn-sm btn-icon btn-success m-1"><i
-                                                            class="fas fa-eye"></i></a>
-                                                    <form action="{{ route('users.destroy', $user) }}" method="post">
+                                                            class="fas fa-edit"></i></a>
+                                                    <form action="{{ route('user.destroy', $user) }}" method="post">
                                                         @csrf
                                                         @method('delete')
                                                         <button class="btn btn-sm btn-danger btn-icon m-1">

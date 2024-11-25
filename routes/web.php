@@ -27,7 +27,7 @@ Route::get('/review/input', [ReviewController::class, 'create']);
 Route::get('/galeri', [BerandaController::class, 'index']);
 
 Route::middleware(['auth'])->group(function () {
-    Route::get('/beranda', [BerandaController::class, 'index'])->name('dashboard');
+    Route::get('/beranda', [BerandaController::class, 'index'])->name('beranda');
     Route::resource('profile',ProfileController ::class);
     Route::resource('berita',BeritaController ::class);
     Route::resource('kategori_berita',KategoriBeritaController ::class);
@@ -35,4 +35,6 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('user',UserController ::class);
     Route::resource('galeri',GaleriController ::class);
     Route::resource('profile',ProfileController ::class);
+    Route::post('/profile/update/{user}', [ProfileController::class, 'update'])->name('profile.update');
+    Route::post('profile/change-password/{user}', [ProfileController::class, 'changePassword'])->name('profile.change-password');
 });

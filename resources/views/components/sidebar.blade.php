@@ -42,31 +42,43 @@
         <div class="sidebar-menu">
             <ul class="menu">
                 <li class="sidebar-title">Menu</li>
-                <li class="sidebar-item {{ $type_menu == 'dashboard' ? 'active' : '' }}">
-                    <a href="{{ route('dashboard') }}" class='sidebar-link'>
-                        <i class="bi bi-grid-fill"></i>
+                <li class="sidebar-item {{ $type_menu == 'beranda' ? 'active' : '' }}">
+                    <a href="{{ route('beranda') }}" class='sidebar-link'>
+                        <i class="bi bi-house-door-fill"></i>
                         <span>Dashboard</span>
                     </a>
                 </li>
-                <li class="sidebar-item {{ $type_menu == 'users' ? 'active' : '' }}">
-                    <a href="{{ route('users.index') }}" class='sidebar-link'>
-                        <i class="bi bi-people-fill"></i>
+                <li class="sidebar-item {{ $type_menu == 'user' ? 'active' : '' }}">
+                    <a href="{{ route('user.index') }}" class='sidebar-link'>
+                        <i class="bi bi-person-lines-fill"></i>
                         <span>Users</span>
                     </a>
                 </li>
-                <li class="sidebar-item  has-sub {{ $type_menu == 'studi' ? 'active' : '' }}">
+                <li class="sidebar-item {{ $type_menu == 'galeri' ? 'active' : '' }}">
+                    <a href="{{ route('galeri.index') }}" class='sidebar-link'>
+                        <i class="bi bi-image-fill"></i>
+                        <span>Galeri</span>
+                    </a>
+                </li>
+                <li class="sidebar-item  has-sub {{ $type_menu == 'berita' ? 'active' : '' }}">
                     <a href="#" class='sidebar-link'>
-                        <i class="bi bi-collection-fill"></i>
-                        <span>Detail Studi</span>
+                        <i class="bi bi-newspaper"></i>
+                        <span>Berita</span>
                     </a>
                     <ul class="submenu ">
-                        <li class="submenu-item {{ Request::is('studi/mapel') ? 'active' : '' }}">
-                            <a href="{{ route('mapel.index') }}" class="submenu-link">Mata Pelajaran</a>
+                        <li class="submenu-item {{ Request::is('berita/berita') ? 'active' : '' }}">
+                            <a href="{{ route('berita.index') }}" class="submenu-link">Berita</a>
                         </li>
-                        <li class="submenu-item {{ Request::is('studi/materi') ? 'active' : '' }} ">
-                            <a href="{{ route('materi.index') }}" class="submenu-link">Materi</a>
+                        <li class="submenu-item {{ Request::is('berita/kategori') ? 'active' : '' }} ">
+                            <a href="{{ route('kategori_berita.index') }}" class="submenu-link">Kategori Berita</a>
                         </li>
                     </ul>
+                </li>
+                <li class="sidebar-item {{ $type_menu == 'review' ? 'active' : '' }}">
+                    <a href="{{ route('review.index') }}" class='sidebar-link'>
+                        <i class="bi bi-star-fill"></i>
+                        <span>Review</span>
+                    </a>
                 </li>
             </ul>
         </div>

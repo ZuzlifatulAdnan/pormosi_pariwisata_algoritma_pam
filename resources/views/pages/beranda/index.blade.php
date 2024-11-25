@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Dashboard')
+@section('title', 'Beranda')
 
 @push('style')
     <!-- CSS Libraries -->
@@ -20,95 +20,118 @@
         <div class="page-content">
             <section class="row">
                 @if (Auth::user())
-                    <div class="col-12">
-                        <div class="row">
-                            <div class="col-6 col-lg-3 col-md-6">
-                                <a href="{{ route('users.index') }}">
-                                    <div class="card">
-                                        <div class="card-body px-4 py-4-5">
-                                            <div class="row">
-                                                <div
-                                                    class="col-md-4 col-lg-12 col-xl-12 col-xxl-5 d-flex justify-content-start ">
-                                                    <div class="stats-icon purple mb-2">
-                                                        <i class="fa-solid fa-users"></i>
-                                                        {{-- <i class="iconly-users"></i> --}}
-                                                    </div>
+                <div class="col-12">
+                    <div class="row">
+                        <!-- Total User -->
+                        <div class="col-6 col-lg-3 col-md-6">
+                            <a href="{{ route('user.index') }}">
+                                <div class="card">
+                                    <div class="card-body px-4 py-4-5">
+                                        <div class="row">
+                                            <div class="col-md-4 col-lg-12 col-xl-12 col-xxl-5 d-flex justify-content-start">
+                                                <div class="stats-icon purple mb-2">
+                                                    <i class="fa-solid fa-users"></i> <!-- Ikon untuk User -->
                                                 </div>
-                                                <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
-                                                    <h6 class="text-muted font-semibold">Total User</h6>
-                                                    <h6 class="font-extrabold mb-0">{{ $users->count() }}</h6>
-                                                </div>
+                                            </div>
+                                            <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
+                                                <h6 class="text-muted font-semibold">Total User</h6>
+                                                <h6 class="font-extrabold mb-0">{{$users->count()}}</h6>
                                             </div>
                                         </div>
                                     </div>
-                                </a>
-                            </div>
-                            <div class="col-6 col-lg-3 col-md-6">
-                                <a href="{{ route('mapel.index') }}">
-                                    <div class="card">
-                                        <div class="card-body px-4 py-4-5">
-                                            <div class="row">
-                                                <div
-                                                    class="col-md-4 col-lg-12 col-xl-12 col-xxl-5 d-flex justify-content-start ">
-                                                    <div class="stats-icon blue mb-2">
-                                                        <i class="fa-brands fa-leanpub"></i>
-                                                    </div>
+                                </div>
+                            </a>
+                        </div>
+
+                        <!-- Total Berita -->
+                        <div class="col-6 col-lg-3 col-md-6">
+                            <a href="{{ route('berita.index') }}">
+                                <div class="card">
+                                    <div class="card-body px-4 py-4-5">
+                                        <div class="row">
+                                            <div class="col-md-4 col-lg-12 col-xl-12 col-xxl-5 d-flex justify-content-start">
+                                                <div class="stats-icon blue mb-2">
+                                                    <i class="fa-solid fa-newspaper"></i> <!-- Ikon Berita -->
                                                 </div>
-                                                <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
-                                                    <h6 class="text-muted font-semibold">Total Mapel</h6>
-                                                    <h6 class="font-extrabold mb-0">{{ $mapels->count() }}</h6>
-                                                </div>
+                                            </div>
+                                            <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
+                                                <h6 class="text-muted font-semibold">Total Berita</h6>
+                                                <h6 class="font-extrabold mb-0"></h6>
                                             </div>
                                         </div>
                                     </div>
-                                </a>
-                            </div>
-                            <div class="col-6 col-lg-3 col-md-6">
-                                <a href="{{ route('materi.index') }}">
-                                    <div class="card">
-                                        <div class="card-body px-4 py-4-5">
-                                            <div class="row">
-                                                <div
-                                                    class="col-md-4 col-lg-12 col-xl-12 col-xxl-5 d-flex justify-content-start ">
-                                                    <div class="stats-icon green mb-2">
-                                                        <i class="fa-solid fa-file"></i>
-                                                    </div>
+                                </div>
+                            </a>
+                        </div>
+
+                        <!-- Total Foto di Galeri -->
+                        <div class="col-6 col-lg-3 col-md-6">
+                            <a href="{{ route('galeri.index') }}">
+                                <div class="card">
+                                    <div class="card-body px-4 py-4-5">
+                                        <div class="row">
+                                            <div class="col-md-4 col-lg-12 col-xl-12 col-xxl-5 d-flex justify-content-start">
+                                                <div class="stats-icon green mb-2">
+                                                    <i class="fa-solid fa-images"></i> <!-- Ikon Foto -->
                                                 </div>
-                                                <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
-                                                    <h6 class="text-muted font-semibold">Total Materi</h6>
-                                                    <h6 class="font-extrabold mb-0">{{ $materis->count() }}</h6>
-                                                </div>
+                                            </div>
+                                            <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
+                                                <h6 class="text-muted font-semibold">Total Foto di Galeri</h6>
+                                                <h6 class="font-extrabold mb-0"></h6>
                                             </div>
                                         </div>
                                     </div>
-                                </a>
-                            </div>
-                            <div class="col-6 col-lg-3 col-md-6">
-                                <a href="{{ route('materi.index') }}">
-                                    <div class="card">
-                                        <div class="card-body px-4 py-4-5">
-                                            <div class="row">
-                                                <div
-                                                    class="col-md-4 col-lg-12 col-xl-12 col-xxl-5 d-flex justify-content-start ">
-                                                    <div class="stats-icon red mb-2">
-                                                        <i class="fa-solid fa-video"></i>
-                                                    </div>
+                                </div>
+                            </a>
+                        </div>
+
+                        <!-- Total Video di Galeri -->
+                        <div class="col-6 col-lg-3 col-md-6">
+                            <a href="">
+                                <div class="card">
+                                    <div class="card-body px-4 py-4-5">
+                                        <div class="row">
+                                            <div class="col-md-4 col-lg-12 col-xl-12 col-xxl-5 d-flex justify-content-start">
+                                                <div class="stats-icon red mb-2">
+                                                    <i class="fa-solid fa-video"></i> <!-- Ikon Video -->
                                                 </div>
-                                                <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
-                                                    <h6 class="text-muted font-semibold">Total Vidio</h6>
-                                                    <h6 class="font-extrabold mb-0">{{ $materis->count() }}</h6>
-                                                </div>
+                                            </div>
+                                            <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
+                                                <h6 class="text-muted font-semibold">Total Video di Galeri</h6>
+                                                <h6 class="font-extrabold mb-0"></h6>
                                             </div>
                                         </div>
                                     </div>
-                                </a>
-                            </div>
+                                </div>
+                            </a>
+                        </div>
+
+                        <!-- Total Review -->
+                        <div class="col-6 col-lg-3 col-md-6">
+                            <a href="{{ route('review.index') }}">
+                                <div class="card">
+                                    <div class="card-body px-4 py-4-5">
+                                        <div class="row">
+                                            <div class="col-md-4 col-lg-12 col-xl-12 col-xxl-5 d-flex justify-content-start">
+                                                <div class="stats-icon blue mb-2">
+                                                    <i class="fa-solid fa-comment"></i> <!-- Ikon Review -->
+                                                </div>
+                                            </div>
+                                            <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
+                                                <h6 class="text-muted font-semibold">Total Review</h6>
+                                                <h6 class="font-extrabold mb-0"></h6>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
                         </div>
                     </div>
+                </div>
                 @else
                     <div class="col-12">
                         <div class="row">
-                            @foreach ($mapels as $mapel)
+                            {{-- @foreach ($mapels as $mapel)
                                 <div class="col-6 col-lg-3 col-md-6">
                                     <a href="{{ route('detailMapel', $mapel) }}">
                                         <div class="card">
@@ -128,7 +151,7 @@
                                         </div>
                                     </a>
                                 </div>
-                            @endforeach
+                            @endforeach --}}
                         </div>
                     </div>
                 @endif
