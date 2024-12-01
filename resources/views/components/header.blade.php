@@ -35,7 +35,9 @@
                     </svg>
                 </div>
             @else
-                <a href="/"><i class="bi bi-chevron-left me-3"></i></a>
+                <a href="#" class="burger-btn d-lg-none d-block me-3">
+                    <i class="bi bi-justify fs-3"></i>
+                </a>
                 <div class="theme-toggle d-flex gap-2  align-items-center mt-2">
                     <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
                         aria-hidden="true" role="img" class="iconify iconify--system-uicons" width="20"
@@ -80,11 +82,12 @@
                             <div class="user-menu d-flex">
                                 <div class="user-name text-end me-3">
                                     <h6 class="mb-0 text-gray-600">{{ Auth::user()->name }}</h6>
-                                    <p class="mb-0 text-sm text-gray-600">{{ ucfirst(Auth::user()->role) }}</p>
+                                    <p class="mb-0 text-sm text-gray-600">{{ ucfirst(Auth::user()->email) }}</p>
                                 </div>
                                 <div class="user-img d-flex align-items-center">
                                     <div class="avatar avatar-md">
-                                        <img src="{{ Auth::user()->image ? asset('img/user/' . Auth::user()->image) : asset('assets/compiled/jpg/2.jpg') }}">
+                                        <img
+                                            src="{{ Auth::user()->image ? asset('img/user/' . Auth::user()->image) : asset('assets/compiled/jpg/2.jpg') }}">
                                     </div>
                                 </div>
                             </div>

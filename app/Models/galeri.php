@@ -10,7 +10,8 @@ class galeri extends Model
     use HasFactory;
     protected $fillable = [
         'nama',
-        'file',
-        'type'
+        'type',
+        'image',
+        'vidio'
     ];
 }

@@ -14,8 +14,9 @@ return new class extends Migration
         Schema::create('galeris', function (Blueprint $table) {
             $table->id();
             $table->string('nama');
-            $table->string('file');
             $table->string('type');
+            $table->string('image')->nullable();
+            $table->string('vidio')->nullable();
             $table->timestamps();
         });
     }

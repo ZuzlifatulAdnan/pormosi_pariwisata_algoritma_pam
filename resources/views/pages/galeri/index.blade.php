@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Kategori Berita')
+@section('title', 'Galeri')
 
 @push('style')
     <!-- CSS Libraries -->
@@ -14,8 +14,8 @@
             <div class="page-title">
                 <div class="row">
                     <div class="col-12 col-md-6 order-md-1 order-last">
-                        <h3>Kategori Berita</h3>
-                        <p class="text-subtitle text-muted">Halaman tempat pengguna dapat mengubah informasi Kategori Berita.</p>
+                        <h3>Galeri</h3>
+                        <p class="text-subtitle text-muted">Halaman tempat pengguna dapat mengubah informasi Galeri.</p>
                     </div>
                     <div class="col-12 col-md-6 order-md-2 order-first">
                         {{-- <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
@@ -34,32 +34,35 @@
                 <div class="card">
                     <div class="card-header">
                         <h5 class="card-title">
-                            <a href="{{ route('kategori_berita.create') }}">
-                                <button class="btn btn-primary">Tambah Kategori Berita</button>
+                            <a href="{{ route('galeri.create') }}">
+                                <button class="btn btn-primary">Tambah Galeri</button>
                             </a>
                         </h5>
                     </div>
                     <div class="card-body">
+
                         <div class="table-responsive">
                             <table class="table" id="table1">
                                 <thead>
                                     <tr>
                                         <th>No</th>
                                         <th>Nama</th>
+                                        <th>Type</th>
                                         <th class="text-center">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($kategori_beritas as $kategori_berita)
+                                    @foreach ($galeris as $galeri)
                                         <tr>
                                             <td>{{ $loop->iteration }}</td>
-                                            <td>{{ $kategori_berita->nama }}</td>
+                                            <td>{{ $galeri->nama }}</td>
+                                            <td>{{ $galeri->type }}</td>
                                             <td>
                                                 <div class="d-flex justify-content-center">
-                                                    <a href="{{ route('kategori_berita.edit', $kategori_berita) }}"
+                                                    <a href="{{ route('galeri.edit', $galeri) }}"
                                                         class="btn btn-sm btn-icon btn-success m-1"><i
                                                             class="fas fa-edit"></i></a>
-                                                    <form action="{{ route('kategori_berita.destroy', $kategori_berita) }}" method="post">
+                                                    <form action="{{ route('galeri.destroy', $galeri) }}" method="post">
                                                         @csrf
                                                         @method('delete')
                                                         <button class="btn btn-sm btn-danger btn-icon m-1">

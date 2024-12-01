@@ -10,15 +10,15 @@ class KategoriBeritaController extends Controller
 {
     public function index()
     {
-        $type_menu = 'kategori_berita';
-        $kategori_berita = kategori_berita::all();
+        $type_menu = 'berita';
+        $kategori_beritas = kategori_berita::all();
 
-        return view('pages.kategori_berita.index', compact('type_menu', 'kategori_berita'));
+        return view('pages.kategori_berita.index', compact('type_menu', 'kategori_beritas'));
     }
 
     public function create()
     {
-        $type_menu = 'kategori_berita';
+        $type_menu = 'berita';
 
         return view('pages.kategori_berita.create', compact('type_menu'));
     }
@@ -41,23 +41,23 @@ class KategoriBeritaController extends Controller
     /**
      * Display the specified resource.
      */
-    public function edit(kategori_berita $kategori_berita)
+    public function edit(kategori_berita $kategori_beritum)
     {
-        $type_menu = 'kategori_berita';
+        $type_menu = 'berita';
 
-        return view('pages.kategori_berita.edit', compact('type_menu', 'kategori_berita'));
+        return view('pages.kategori_berita.edit', compact('type_menu', 'kategori_beritum'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, kategori_berita $kategori_berita)
+    public function update(Request $request, kategori_berita $kategori_beritum)
     {
         $request->validate([
             'nama' => 'required|string',
         ]);
 
-        $kategori_berita->update([
+        $kategori_beritum->update([
             'nama' => $request->nama,
         ]);
 
@@ -67,9 +67,9 @@ class KategoriBeritaController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(kategori_berita $kategori_berita)
+    public function destroy(kategori_berita $kategori_beritum)
     {
-        $kategori_berita->delete();
+        $kategori_beritum->delete();
         return Redirect::route('kategori_berita.index')->with('danger', 'Kategori Berita berhasil di hapus.');
     }
 }

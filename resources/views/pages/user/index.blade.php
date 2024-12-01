@@ -49,7 +49,7 @@
                                         <th>Name</th>
                                         <th>Email</th>
                                         <th>Dibuat</th>
-                                        <th>Action</th>
+                                        <th class="text-center">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>

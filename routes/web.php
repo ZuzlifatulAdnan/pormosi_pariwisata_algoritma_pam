@@ -19,15 +19,15 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-Route::redirect('/', 'beranda');
-Route::get('/beranda', [BerandaController::class, 'index']);
-Route::get('/berita', [BeritaController::class, 'index']);
-Route::get('/review', [ReviewController::class, 'index']);
-Route::get('/review/input', [ReviewController::class, 'create']);
-Route::get('/galeri', [BerandaController::class, 'index']);
+// Route::redirect('/', 'beranda');
+Route::get('/', [BerandaController::class, 'index']);
+Route::get('/beritas', [BeritaController::class, 'index']);
+Route::get('/reviews', [ReviewController::class, 'index']);
+Route::get('/review/inputs', [ReviewController::class, 'create']);
+Route::get('/galeris', [BerandaController::class, 'index']);
 
 Route::middleware(['auth'])->group(function () {
-    Route::get('/beranda', [BerandaController::class, 'index'])->name('beranda');
+    Route::resource('beranda',BerandaController ::class);
     Route::resource('profile',ProfileController ::class);
     Route::resource('berita',BeritaController ::class);
     Route::resource('kategori_berita',KategoriBeritaController ::class);

@@ -56,7 +56,7 @@
                                             </div>
                                             <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
                                                 <h6 class="text-muted font-semibold">Total Berita</h6>
-                                                <h6 class="font-extrabold mb-0"></h6>
+                                                <h6 class="font-extrabold mb-0">{{$beritas->count()}}</h6>
                                             </div>
                                         </div>
                                     </div>
@@ -77,7 +77,7 @@
                                             </div>
                                             <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
                                                 <h6 class="text-muted font-semibold">Total Foto di Galeri</h6>
-                                                <h6 class="font-extrabold mb-0"></h6>
+                                                <h6 class="font-extrabold mb-0">{{$fotos->count()}}</h6>
                                             </div>
                                         </div>
                                     </div>
@@ -98,7 +98,7 @@
                                             </div>
                                             <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
                                                 <h6 class="text-muted font-semibold">Total Video di Galeri</h6>
-                                                <h6 class="font-extrabold mb-0"></h6>
+                                                <h6 class="font-extrabold mb-0">{{$vidios->count()}}</h6>
                                             </div>
                                         </div>
                                     </div>
@@ -119,7 +119,7 @@
                                             </div>
                                             <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
                                                 <h6 class="text-muted font-semibold">Total Review</h6>
-                                                <h6 class="font-extrabold mb-0"></h6>
+                                                <h6 class="font-extrabold mb-0">{{$reviews->count()}}</h6>
                                             </div>
                                         </div>
                                     </div>

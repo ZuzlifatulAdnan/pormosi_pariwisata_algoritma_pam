@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Mata Pelajaran')
+@section('title', 'Berita')
 
 @push('style')
     <!-- CSS Libraries -->
@@ -14,8 +14,8 @@
             <div class="page-title">
                 <div class="row">
                     <div class="col-12 col-md-6 order-md-1 order-last">
-                        <h3>Mata Pelajaran</h3>
-                        <p class="text-subtitle text-muted">Halaman tempat pengguna dapat mengubah informasi Mata Pelajaran.
+                        <h3>Berita</h3>
+                        <p class="text-subtitle text-muted">Halaman tempat pengguna dapat mengubah informasi Berita.
                         </p>
                     </div>
                     <div class="col-12 col-md-6 order-md-2 order-first">
@@ -35,8 +35,8 @@
                 <div class="card">
                     <div class="card-header">
                         <h5 class="card-title">
-                            <a href="{{ route('mapel.create') }}">
-                                <button class="btn btn-primary">Tambah Mata Pelajaran</button>
+                            <a href="{{ route('berita.create') }}">
+                                <button class="btn btn-primary">Tambah Berita</button>
                             </a>
                         </h5>
                     </div>
@@ -46,25 +46,26 @@
                                 <thead>
                                     <tr>
                                         <th>No</th>
-                                        <th>Name</th>
-                                        <th>Code</th>
+                                        <th class="text-center">Foto</th>
+                                        <th>kategori</th>
+                                        <th>Judul</th>
                                         <th>Dibuat</th>
-                                        <th>Action</th>
+                                        <th class="text-center">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($mapels as $mapel)
+                                    @foreach ($beritas as $berita)
                                         <tr>
                                             <td>{{ $loop->iteration }}</td>
-                                            <td>{{ $mapel->name }}</td>
-                                            <td>{{ $mapel->code }}</td>
-                                            <td>{{ $mapel->created_at }}</td>
+                                            <td>{{ $berita->kategori_berita->nama }}</td>
+                                            <td>{{ $berita->code }}</td>
+                                            <td>{{ $berita->created_at }}</td>
                                             <td>
                                                 <div class="d-flex justify-content-center">
-                                                    <a href="{{ route('mapel.show', $mapel) }}"
+                                                    <a href="{{ route('berita.edit', $berita) }}"
                                                         class="btn btn-sm btn-icon btn-success m-1"><i
                                                             class="fas fa-eye"></i></a>
-                                                    <form action="{{ route('mapel.destroy', $mapel) }}" method="post">
+                                                    <form action="{{ route('berita.destroy', $berita) }}" method="post">
                                                         @csrf
                                                         @method('delete')
                                                         <button class="btn btn-sm btn-danger btn-icon m-1">

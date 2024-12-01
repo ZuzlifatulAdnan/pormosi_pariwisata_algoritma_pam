@@ -43,9 +43,9 @@
             <ul class="menu">
                 <li class="sidebar-title">Menu</li>
                 <li class="sidebar-item {{ $type_menu == 'beranda' ? 'active' : '' }}">
-                    <a href="{{ route('beranda') }}" class='sidebar-link'>
+                    <a href="{{ route('beranda.index') }}" class='sidebar-link'>
                         <i class="bi bi-house-door-fill"></i>
-                        <span>Dashboard</span>
+                        <span>Beranda</span>
                     </a>
                 </li>
                 <li class="sidebar-item {{ $type_menu == 'user' ? 'active' : '' }}">
@@ -66,10 +66,10 @@
                         <span>Berita</span>
                     </a>
                     <ul class="submenu ">
-                        <li class="submenu-item {{ Request::is('berita/berita') ? 'active' : '' }}">
+                        <li class="submenu-item {{ Request::is('berita') ? 'active' : '' }}">
                             <a href="{{ route('berita.index') }}" class="submenu-link">Berita</a>
                         </li>
-                        <li class="submenu-item {{ Request::is('berita/kategori') ? 'active' : '' }} ">
+                        <li class="submenu-item {{ Request::is('kategori_berita') ? 'active' : '' }} ">
                             <a href="{{ route('kategori_berita.index') }}" class="submenu-link">Kategori Berita</a>
                         </li>
                     </ul>

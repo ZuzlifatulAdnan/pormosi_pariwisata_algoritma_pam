@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Berita')
+@section('title', 'Kategori Berita')
 
 @push('style')
     <!-- CSS Libraries -->
@@ -14,8 +14,8 @@
             <div class="page-title">
                 <div class="row">
                     <div class="col-12 col-md-6 order-md-1 order-last">
-                        <h3>Edit Berita</h3>
-                        <p class="text-subtitle text-muted">Halaman tempat pengguna dapat mengubah informasi Berita.
+                        <h3>Tambah Kategori Berita</h3>
+                        <p class="text-subtitle text-muted">Halaman tempat pengguna dapat menambah informasi Kategori Berita.
                         </p>
                     </div>
                     <div class="col-12 col-md-6 order-md-2 order-first">
@@ -33,23 +33,17 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-body">
-                                <form action="{{ route('berita.update', $berita) }}" method="POST">
-                                    @method('PUT')
+                                <form action="{{ route('kategori_berita.store') }}" enctype="multipart/form-data"
+                                    method="POST">
                                     @csrf
                                     <div class="form-group">
-                                        <label for="name" class="form-label">Name ({{ $berita->code }})</label>
-                                        <input type="text" name="name" id="name"
-                                            class="form-control @error('name') is-invalid
-
-                                        @enderror"
-                                            placeholder="Your Name" required value="{{ old('name') ?? $berita->name }}">
+                                        <label for="name">Nama</label>
+                                        <input type="text" name="nama" id="name"
+                                            class="form-control @error('name') is-invalid @enderror" required>
                                         @error('name')
-                                            <div class="invalid-feedback">
-                                                {{ $message }}
-                                            </div>
+                                            <div class="invalid-feedback">{{ $message }}</div>
                                         @enderror
                                     </div>
-
                                     <div class="form-group">
                                         <button type="submit" class="btn btn-primary">Simpan</button>
                                     </div>
@@ -64,14 +58,14 @@
 @endsection
 
 @push('scripts')
-    <!-- JS Libraies -->
-    {{-- <script src="{{ asset('assets/extensions/perfect-scrollbar/perfect-scrollbar.min.js') }}"></script> --}}
-
-
-    {{-- <script src="{{ asset('assets/compiled/js/app.js') }}"></script> --}}
-    {{-- <script src="{{ asset('assets/extensions/apexcharts/apexcharts.min.js') }}"></script>
-    <script src="{{ asset('assets/static/js/pages/dashboard.js') }}"></script> --}}
-
-
     <!-- Page Specific JS File -->
+    <script>
+        function previewImage(event) {
+            const reader = new FileReader();
+            reader.onload = function() {
+                document.getElementById('imagePreview').src = reader.result; // Update the image preview
+            };
+            reader.readAsDataURL(event.target.files[0]); // Read the selected file as Data URL
+        }
+    </script>
 @endpush

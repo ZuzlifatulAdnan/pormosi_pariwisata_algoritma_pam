@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\berita;
+use App\Models\kategori_berita;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 
@@ -11,16 +12,16 @@ class BeritaController extends Controller
     public function index()
     {
         $type_menu = 'berita';
-        $berita = berita::latest()->get();
+        $beritas = berita::latest()->get();
 
-        return view('pages.berita.index', compact('type_menu', 'berita'));
+        return view('pages.berita.index', compact('type_menu', 'beritas'));
     }
 
     public function create()
     {
         $type_menu = 'berita';
-
-        return view('pages.berita.create', compact('type_menu'));
+        $kategoriBerita = kategori_berita::all();
+        return view('pages.berita.create', compact('type_menu', 'kategoriBerita'));
     }
 
     /**
@@ -29,12 +30,14 @@ class BeritaController extends Controller
     public function store(Request $request)
     {
         $request->validate([
+            'kategori_berita' => 'required|integer',
             'judul' => 'required|string',
             'deskripsi' => 'required|string',
             'image' => 'nullable|mimes:jpg,png,jpeg'
         ]);
 
         berita::create([
+            'kategori_berita' => $request->kategori_berita,
             'judul' => $request->judul,
             'deskripsi' => $request->deskripsi,
         ]);
@@ -55,8 +58,9 @@ class BeritaController extends Controller
     public function edit(berita $berita)
     {
         $type_menu = 'berita';
+        $kategoriBerita = kategori_berita::all();
 
-        return view('pages.berita.edit', compact('type_menu', 'berita'));
+        return view('pages.berita.edit', compact('type_menu', 'berita', 'kategoriBerita'));
     }
 
     /**
@@ -65,11 +69,13 @@ class BeritaController extends Controller
     public function update(Request $request, berita $berita)
     {
         $request->validate([
+            'kategori_berita' => 'required|integer',
             'judul' => 'required|string',
             'deskripsi' => 'required|string',
         ]);
 
         $berita->update([
+            'kategori_berita' => $request->kategori_berita,
             'judul' => $request->judul,
             'deskripsi' => $request->deskripsi,
         ]);

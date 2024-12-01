@@ -9,7 +9,7 @@ class kategori_berita extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'name',
+        'nama'
     ];
 
 }
