@@ -19,21 +19,22 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-// Route::redirect('/', 'beranda');
-Route::get('/', [BerandaController::class, 'index']);
-Route::get('/beritas', [BeritaController::class, 'index']);
-Route::get('/reviews', [ReviewController::class, 'index']);
-Route::get('/review/inputs', [ReviewController::class, 'create']);
-Route::get('/galeris', [BerandaController::class, 'index']);
+Route::redirect('/', 'beranda');
+Route::get('/beranda', [BerandaController::class, 'index'])->name('beranda.index');
+Route::get('/berita', [BeritaController::class, 'index'])->name('berita.index');
+Route::get('/review', [ReviewController::class, 'index'])->name(name: 'review.index');
+Route::get('/review/input', [ReviewController::class, 'create'])->name('review.create');
+Route::get('/foto', [BerandaController::class, 'index'])->name('foto.index');
+Route::get('/vidio', [BerandaController::class, 'index'])->name('vidio.index');
 
 Route::middleware(['auth'])->group(function () {
-    Route::resource('beranda',BerandaController ::class);
+    Route::resource('berandas',BerandaController ::class);
     Route::resource('profile',ProfileController ::class);
-    Route::resource('berita',BeritaController ::class);
+    Route::resource('beritas',BeritaController ::class);
     Route::resource('kategori_berita',KategoriBeritaController ::class);
-    Route::resource('review',ReviewController ::class);
+    Route::resource('reviews',ReviewController ::class);
     Route::resource('user',UserController ::class);
-    Route::resource('galeri',GaleriController ::class);
+    Route::resource('galeris',GaleriController ::class);
     Route::resource('profile',ProfileController ::class);
     Route::post('/profile/update/{user}', [ProfileController::class, 'update'])->name('profile.update');
     Route::post('profile/change-password/{user}', [ProfileController::class, 'changePassword'])->name('profile.change-password');

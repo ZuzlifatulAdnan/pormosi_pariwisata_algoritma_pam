@@ -47,7 +47,7 @@ class GaleriController extends Controller
             'image' => $imagePath,
             'vidio' => $request->vidio,
         ]);
-        return Redirect::route('galeri.index')->with('success', ' Galeri berhasil di tambah.');
+        return Redirect::route('galeris.index')->with('success', ' Galeri berhasil di tambah.');
     }
 
     /**
@@ -75,7 +75,7 @@ class GaleriController extends Controller
         $galeri->update([
             'nama' => $request->nama,
             'type' => $request->type,
-            'vidio' => $request->vidio,
+            'vidio' => $request->vidio
         ]);
         if ($request->hasFile('image')) {
             $image = $request->file('image');
@@ -85,7 +85,7 @@ class GaleriController extends Controller
                 'image' => $path
             ]);
         }
-        return Redirect::route('galeri.index')->with('success', 'Galeri berhasil di ubah.');
+        return Redirect::route('galeris.index')->with('success', 'Galeri berhasil di ubah.');
     }
 
     /**
@@ -94,6 +94,6 @@ class GaleriController extends Controller
     public function destroy(galeri $galeri)
     {
         $galeri->delete();
-        return Redirect::route('galeri.index')->with('danger', 'Galeri berhasil di hapus.');
+        return Redirect::route('galeris.index')->with('danger', 'Galeri berhasil di hapus.');
     }
 }

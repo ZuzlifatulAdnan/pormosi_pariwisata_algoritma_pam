@@ -45,7 +45,7 @@
 
                         <!-- Total Berita -->
                         <div class="col-6 col-lg-3 col-md-6">
-                            <a href="{{ route('berita.index') }}">
+                            <a href="{{ route('beritas.index') }}">
                                 <div class="card">
                                     <div class="card-body px-4 py-4-5">
                                         <div class="row">
@@ -66,7 +66,7 @@
 
                         <!-- Total Foto di Galeri -->
                         <div class="col-6 col-lg-3 col-md-6">
-                            <a href="{{ route('galeri.index') }}">
+                            <a href="{{ route('galeris.index') }}">
                                 <div class="card">
                                     <div class="card-body px-4 py-4-5">
                                         <div class="row">
@@ -87,7 +87,7 @@
 
                         <!-- Total Video di Galeri -->
                         <div class="col-6 col-lg-3 col-md-6">
-                            <a href="">
+                            <a href="{{ route('galeris.index') }}">
                                 <div class="card">
                                     <div class="card-body px-4 py-4-5">
                                         <div class="row">
@@ -108,7 +108,7 @@
 
                         <!-- Total Review -->
                         <div class="col-6 col-lg-3 col-md-6">
-                            <a href="{{ route('review.index') }}">
+                            <a href="{{ route('reviews.index') }}">
                                 <div class="card">
                                     <div class="card-body px-4 py-4-5">
                                         <div class="row">

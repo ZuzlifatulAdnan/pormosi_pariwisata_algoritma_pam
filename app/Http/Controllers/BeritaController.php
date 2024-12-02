@@ -30,26 +30,25 @@ class BeritaController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'kategori_berita' => 'required|integer',
+            'kategori_berita_id' => 'required|integer',
             'judul' => 'required|string',
             'deskripsi' => 'required|string',
             'image' => 'nullable|mimes:jpg,png,jpeg'
         ]);
-
-        berita::create([
-            'kategori_berita' => $request->kategori_berita,
-            'judul' => $request->judul,
-            'deskripsi' => $request->deskripsi,
-        ]);
+        $imagePath = null;
         if ($request->hasFile('image')) {
             $image = $request->file('image');
-            $path = uniqid() . '.' . $image->getClientOriginalExtension();
-            $image->move('img/berita/', $path);
-            berita::create([
-                'image' => $path
-            ]);
+            $imagePath = uniqid() . '.' . $image->getClientOriginalExtension();
+            $image->move('img/berita/', $imagePath);
         }
-        return Redirect::route('berita.index')->with('success', 'Berita berhasil di tambah.');
+        berita::create([
+            'kategori_berita_id' => $request->kategori_berita_id,
+            'judul' => $request->judul,
+            'deskripsi' => $request->deskripsi,
+            'image' => $imagePath,
+        ]);
+    
+        return Redirect::route('beritas.index')->with('success', 'Berita berhasil di tambah.');
     }
 
     /**
@@ -69,26 +68,27 @@ class BeritaController extends Controller
     public function update(Request $request, berita $berita)
     {
         $request->validate([
-            'kategori_berita' => 'required|integer',
+            'kategori_berita_id' => 'required|integer',
             'judul' => 'required|string',
             'deskripsi' => 'required|string',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048', // Optional image field
         ]);
 
         $berita->update([
-            'kategori_berita' => $request->kategori_berita,
+            'kategori_berita_id' => $request->kategori_berita_id,
             'judul' => $request->judul,
             'deskripsi' => $request->deskripsi,
         ]);
         if ($request->hasFile('image')) {
             $image = $request->file('image');
             $path = uniqid() . '.' . $image->getClientOriginalExtension();
-            $image->move('img/avatar/', $path);
+            $image->move('img/berita/', $path);
             $berita->update([
                 'image' => $path
             ]);
         }
 
-        return Redirect::route('berita.index')->with('success', 'Berita berhasil di ubah.');
+        return Redirect::route('beritas.index')->with('success', 'Berita berhasil di ubah.');
     }
 
     /**
@@ -97,6 +97,6 @@ class BeritaController extends Controller
     public function destroy(berita $berita)
     {
         $berita->delete();
-        return Redirect::route('berita.index')->with('danger', 'Berita berhasil di hapus.');
+        return Redirect::route('beritas.index')->with('danger', 'Berita berhasil di hapus.');
     }
 }

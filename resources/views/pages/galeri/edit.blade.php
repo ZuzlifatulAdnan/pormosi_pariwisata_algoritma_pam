@@ -32,7 +32,7 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-body">
-                                <form action="{{ route('galeri.update', $galeri) }}" method="POST"
+                                <form action="{{ route('galeris.update', $galeri) }}" method="POST"
                                     enctype="multipart/form-data">
                                     @method('Patch')
                                     @csrf

@@ -3,8 +3,9 @@
 @section('title', 'Berita')
 
 @push('style')
-    <link rel="stylesheet" href="assets/scss/pages/summernote.scss">
-    <link rel="stylesheet" href="assets/extensions/summernote/summernote-lite.css">
+    <!-- Bootstrap 4 dan Summernote CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.css" rel="stylesheet">
 @endpush
 
 @section('main')
@@ -14,63 +15,55 @@
                 <div class="row">
                     <div class="col-12 col-md-6 order-md-1 order-last">
                         <h3>Tambah Berita</h3>
-                        <p class="text-subtitle text-muted">Halaman tempat pengguna dapat menambah informasi Berita.
-                        </p>
-                    </div>
-                    <div class="col-12 col-md-6 order-md-2 order-first">
-                        {{-- <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
-                            <ol class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="{{ route('home') }}">Dashboard</a></li>
-                                <li class="breadcrumb-item active" aria-current="page">Profile</li>
-                            </ol>
-                        </nav> --}}
+                        <p class="text-subtitle text-muted">Halaman tempat pengguna dapat menambah informasi Berita.</p>
                     </div>
                 </div>
             </div>
+
             <section class="section">
                 <div class="row">
                     <div class="col-12">
                         <div class="card">
                             <div class="card-body">
-                                <form action="{{ route('berita.store') }}" method="POST">
+                                <form action="{{ route('beritas.store') }}" method="POST" enctype="multipart/form-data">
                                     @csrf
+                                    <!-- Input Kategori -->
                                     <div class="form-group">
                                         <label for="kategori_id" class="form-label">Kategori Berita</label>
                                         <select name="kategori_berita_id" id="kategori_id"
-                                            class="form-control @error('kategori_id') is-invalid @enderror" required>
+                                            class="form-control @error('kategori_berita_id') is-invalid @enderror" required>
                                             <option value="">-- Pilih Kategori --</option>
                                             @foreach ($kategoriBerita as $kategori)
                                                 <option value="{{ $kategori->id }}">{{ $kategori->nama }}</option>
                                             @endforeach
                                         </select>
-                                        @error('kategori_id')
+                                        @error('kategori_berita_id')
                                             <div class="invalid-feedback">{{ $message }}</div>
                                         @enderror
                                     </div>
+
+                                    <!-- Input Judul -->
                                     <div class="form-group">
                                         <label for="judul" class="form-label">Judul</label>
                                         <input type="text" name="judul" id="judul"
-                                            class="form-control @error('judul') is-invalid
-
-                                        @enderror"
-                                            placeholder="Your Judul" required>
+                                            class="form-control @error('judul') is-invalid @enderror"
+                                            placeholder="Masukkan Judul Berita" required>
                                         @error('judul')
-                                            <div class="invalid-feedback">
-                                                {{ $message }}
-                                            </div>
+                                            <div class="invalid-feedback">{{ $message }}</div>
                                         @enderror
                                     </div>
-                                    {{-- Input Deskripsi dengan Summernote --}}
+
+                                    <!-- Input Deskripsi dengan Summernote -->
                                     <div class="form-group">
-                                        <label for="deskripsi" class="form-label">Deskripsi</label>
-                                        <textarea name="deskripsi" id="deskripsi" class="form-control @error('deskripsi') is-invalid @enderror" rows="5"
-                                            required></textarea>
+                                        <label for="deskripsi">Deskripsi</label>
+                                        <textarea id="summernote" name="deskripsi"
+                                            class="form-control @error('deskripsi') is-invalid @enderror"></textarea>
                                         @error('deskripsi')
-                                            <div class="invalid-feedback">
-                                                {{ $message }}
-                                            </div>
+                                            <div class="invalid-feedback">{{ $message }}</div>
                                         @enderror
                                     </div>
+
+                                    <!-- Input Gambar -->
                                     <div class="form-group">
                                         <label for="image">Gambar</label><br>
                                         <img id="imagePreview" src="{{ asset('assets/compiled/jpg/2.jpg') }}"
@@ -82,6 +75,8 @@
                                             <div class="invalid-feedback">{{ $message }}</div>
                                         @enderror
                                     </div>
+
+                                    <!-- Tombol Simpan -->
                                     <div class="form-group">
                                         <button type="submit" class="btn btn-primary">Simpan</button>
                                     </div>
@@ -96,31 +91,37 @@
 @endsection
 
 @push('scripts')
-    <!-- Summernote JS -->
-    <script src="assets/extensions/jquery/jquery.min.js"></script>
-    <script src="assets/extensions/summernote/summernote-lite.min.js"></script>
-    <script src="assets/static/js/pages/summernote.js"></script>
+    <!-- JQuery, Bootstrap 4, dan Summernote JS -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.js"></script>
 
     <script>
+        // Preview Gambar
         function previewImage(event) {
             const reader = new FileReader();
             reader.onload = function() {
-                document.getElementById('imagePreview').src = reader.result; // Update the image preview
+                document.getElementById('imagePreview').src = reader.result; // Update preview image
             };
-            reader.readAsDataURL(event.target.files[0]); // Read the selected file as Data URL
+            reader.readAsDataURL(event.target.files[0]);
         }
-        // Inisialisasi Summernote setelah DOM selesai dimuat
-        document.addEventListener('DOMContentLoaded', function() {
-            // Inisialisasi Summernote dengan toolbar standar
-            $('#deskripsi').summernote({
-                height: 200, // Set height editor
-                placeholder: 'Tulis deskripsi berita di sini...',
+
+        // Inisialisasi Summernote
+        $(document).ready(function() {
+            $('#summernote').summernote({
+                height: 300, // Tinggi editor
+                placeholder: 'Masukkan deskripsi di sini...',
+                tabsize: 2,
                 toolbar: [
-                    ['style', ['bold', 'italic', 'underline', 'clear']],
-                    ['font', ['strikethrough', 'superscript', 'subscript']],
+                    // ['style', ['style']],
+                    ['font', ['bold', 'italic', 'underline', 'clear']],
+                    // ['fontname', ['fontname']],
+                    ['fontsize', ['fontsize']],
+                    // ['color', ['color']],
                     ['para', ['ul', 'ol', 'paragraph']],
-                    ['insert', ['link', 'picture', 'video']],
-                    ['view', ['fullscreen', 'codeview', 'help']]
+                    // ['height', ['height']],
+                    // ['table', ['table']],
+                    // ['view', ['fullscreen', 'codeview', 'help']]
                 ]
             });
         });
