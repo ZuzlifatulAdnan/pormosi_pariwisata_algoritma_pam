@@ -10,6 +10,7 @@
     <div id="main-content">
         <div class="page-heading">
             <div class="page-title">
+                @include('layouts.alert')
                 <div class="row">
                     <div class="col-12 col-md-6 order-md-1 order-last">
                         <h3>Tambah Review</h3>
@@ -22,7 +23,7 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-body">
-                                <form action="{{ route('reviews.store') }}" method="POST" enctype="multipart/form-data">
+                                <form action="{{ route('review.stores') }}" method="POST" enctype="multipart/form-data">
                                     @csrf
                                     <div class="row">
                                         <div class="form-group col-12 col-lg-6">

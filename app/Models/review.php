@@ -12,7 +12,12 @@ class review extends Model
         'nama',
         'jumlah_pengunjung',
         'asal_pengunjung',
-        'aktivitas',
+        'activity_id',
+        'nilai_review',
         'review_pengunjung'
     ];
+    public function activity()
+    {
+        return $this->belongsTo(activity::class);
+    }
 }

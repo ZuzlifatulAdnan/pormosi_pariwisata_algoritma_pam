@@ -1,11 +1,10 @@
 @extends('layouts.app')
 
-@section('title', 'Materi')
+@section('title', 'Review')
 
 @push('style')
     <!-- CSS Libraries -->
     <link rel="stylesheet" href="{{ asset('assets/extensions/datatables.net-bs5/css/dataTables.bootstrap5.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/compiled/css/table-datatable-jquery.css') }}">
 @endpush
 
 @section('main')
@@ -15,8 +14,8 @@
                 <div class="page-title">
                     <div class="row">
                         <div class="col-12 col-md-6 order-md-1 order-last">
-                            <h3>Materi</h3>
-                            <p class="text-subtitle text-muted">Halaman tempat pengguna dapat mengubah informasi Materi.
+                            <h3>Review</h3>
+                            <p class="text-subtitle text-muted">Halaman tempat pengguna dapat mengubah informasi Review.
                             </p>
                         </div>
                         <div class="col-12 col-md-6 order-md-2 order-first">
@@ -36,8 +35,8 @@
                     <div class="card">
                         <div class="card-header">
                             <h5 class="card-title">
-                                <a href="{{ route('materi.create') }}">
-                                    <button class="btn btn-primary">Tambah Materi</button>
+                                <a href="{{ route('reviews.create') }}">
+                                    <button class="btn btn-primary">Tambah Review</button>
                                 </a>
                             </h5>
                         </div>
@@ -46,39 +45,37 @@
                                 <table class="table" id="table1">
                                     <thead>
                                         <tr>
-                                            <th>No</th>
-                                            <th>Materi</th>
-                                            <th>Mata Pelajaran</th>
-                                            <th>Semester</th>
-                                            <th>Pertemuan</th>
-                                            <th>Vidio</th>
-                                            <th>Materi</th>
-                                            <th>Dibuat</th>
-                                            <th>Action</th>
+                                            <th class="text-center">No</th>
+                                            <th class="text-center">Nama</th>
+                                            <th class="text-center">Jumlah Pengunjung</th>
+                                            <th class="text-center">Asal Pengunjung</th>
+                                            <th class="text-center">Aktivitas</th>
+                                            <th class="text-center">Review Pengunjung</th>
+                                            <th class="text-center">Dibuat</th>
+                                            <th class="text-center">Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($materis as $materi)
+                                        @foreach ($reviews as $review)
                                             <tr>
                                                 <td>{{ $loop->iteration }}</td>
-                                                <td>{{ $materi->materi }}</td>
-                                                <td>{{ $materi->mapel->name }}</td>
-                                                <td>{{ $materi->semester }}</td>
-                                                <td>{{ $materi->pertemuan }}</td>
-                                                <td> <a href="{{ $materi->link_youtube }}" target="_blank"> Vidio</a></td>
-                                                <td><a href="{{ asset('materi/' . $materi->file_materi) }}">Download</a>
-                                                </td>
-                                                <td>{{ $materi->created_at }}</td>
-                                                <td>
+                                                <td>{{ $review->nama }}</td>
+                                                <td class="text-center">{{ $review->jumlah_pengunjung }}</td>
+                                                <td>{{ Str::limit($review->asal_pengunjung, 25) }}</td>
+                                                <td class="text-center">{{ $review->activity->nama }}</td>
+                                                <td>{{ Str::limit($review->review_pengunjung, 20) }}</td>
+                                                <td>{{ $review->created_at }}</td>
+                                                <td class="content-center">
                                                     <div class="d-flex justify-content-center">
-                                                        <a href="{{ route('materi.show', $materi) }}"
+                                                        <a href="{{ route('reviews.edit', $review) }}"
                                                             class="btn btn-sm btn-icon btn-success m-1"><i
-                                                                class="fas fa-eye"></i></a>
-                                                        <form action="{{ route('materi.destroy', $materi) }}"
+                                                                class="fas fa-edit"></i></a>
+                                                        <form action="{{ route('reviews.destroy', $review) }}"
                                                             method="post">
                                                             @csrf
                                                             @method('delete')
-                                                            <button class="btn btn-sm btn-danger btn-icon m-1">
+                                                            <button
+                                                                class="btn btn-sm btn-danger btn-icon m-1 confirm-delete">
                                                                 <i class="fas fa-trash"></i>
                                                             </button>
                                                         </form>
@@ -108,7 +105,4 @@
     <script src="{{ asset('assets/extensions/datatables.net/js/jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset('assets/extensions/datatables.net-bs5/js/dataTables.bootstrap5.min.js') }}"></script>
     <script src="{{ asset('assets/static/js/pages/datatables.js') }}"></script>
-
-
-    <!-- Page Specific JS File -->
 @endpush

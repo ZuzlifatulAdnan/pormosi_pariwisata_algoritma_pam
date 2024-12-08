@@ -85,16 +85,10 @@
                                 <a href="{{ route('reviews.index') }}" class="submenu-link">Review</a>
                             </li>
                             <li class="submenu-item {{ Request::is('hasil-pam') ? 'active' : '' }} ">
-                                {{-- <a href="{{ route('hasil-pam.index') }}" class="submenu-link">Hasil Algoritma PAM</a> --}}
+                                <a href="{{ route('pam.index') }}" class="submenu-link">Hasil Algoritma PAM</a>
                             </li>
                         </ul>
                     </li>
-                    {{-- <li class="sidebar-item {{ $type_menu == 'review' ? 'active' : '' }}">
-                    <a href="{{ route('review-admin.index') }}" class='sidebar-link'>
-                        <i class="bi bi-star-fill"></i>
-                        <span>Review</span>
-                    </a>
-                </li> --}}
                 </ul>
             </div>
         @else
@@ -120,15 +114,15 @@
                         </a>
                         <ul class="submenu ">
                             <li class="submenu-item {{ Request::is('foto') ? 'active' : '' }}">
-                                <a href="{{ route('foto.index') }}" class="submenu-link">Foto</a>
+                                <a href="{{ route('galeri.foto') }}" class="submenu-link">Foto</a>
                             </li>
                             <li class="submenu-item {{ Request::is('vidio') ? 'active' : '' }} ">
-                                <a href="{{ route('vidio.index') }}" class="submenu-link">Video</a>
+                                <a href="{{ route('galeri.vidio') }}" class="submenu-link">Video</a>
                             </li>
                         </ul>
                     </li>
                     <li class="sidebar-item {{ $type_menu == 'review' ? 'active' : '' }}">
-                        <a href="{{ route('review.index') }}" class='sidebar-link'>
+                        <a href="{{ route('review.input') }}" class='sidebar-link'>
                             <i class="bi bi-star-fill"></i>
                             <span>Review</span>
                         </a>

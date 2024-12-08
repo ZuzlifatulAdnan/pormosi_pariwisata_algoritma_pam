@@ -96,4 +96,33 @@ class GaleriController extends Controller
         $galeri->delete();
         return Redirect::route('galeris.index')->with('danger', 'Galeri berhasil di hapus.');
     }
+    public function foto(Request $request)
+    {
+        $type_menu = 'galeri';
+        $judul = $request->input('judul');
+        // Mengambil Foto dengan pencarian dan pagination
+        $foto = galeri::when($judul, function ($query, $judul) {
+            return $query->where('nama', 'like', '%' . $judul . '%');
+        })
+            ->where('type', 'Foto')
+            ->orderBy('created_at', 'desc')
+            ->paginate(9); // Mengatur jumlah item per halaman
+        return view('pages.galeri.foto', compact('type_menu', 'foto'));
+    }
+    public function vidio(Request $request)
+    {
+        $type_menu = 'galeri';
+         // Mengambil query pencarian dari input
+         $judul = $request->input('judul');
+
+         // Mengambil Video dengan pencarian dan pagination
+         $videos = galeri::when($judul, function ($query, $judul) {
+            return $query->where('nama', 'like', '%' . $judul . '%');
+        })
+            ->where('type', 'Vidio')
+            ->orderBy('created_at', 'desc')
+            ->paginate(8);// Mengatur jumlah item per halaman
+
+        return view('pages.galeri.vidio', compact('type_menu', 'videos'));
+    }
 }

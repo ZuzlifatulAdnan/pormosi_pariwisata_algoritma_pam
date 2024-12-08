@@ -2,13 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\activity;
-use App\Models\review;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Redirect;
 
-class ReviewController extends Controller
+class ActivityController extends Controller
 {
     public function index()
     {
@@ -21,9 +17,8 @@ class ReviewController extends Controller
     public function create()
     {
         $type_menu = 'review';
-        $activities = activity::all();
 
-        return view('pages.review.create', compact('type_menu', 'activities'));
+        return view('pages.review.create', compact('type_menu'));
     }
 
     /**
@@ -35,7 +30,7 @@ class ReviewController extends Controller
             'nama' => 'required|string',
             'jumlah_pengunjung' => 'required|string',
             'asal_pengunjung' => 'required|string',
-            'activity_id' => 'required',
+            'aktivitas_id' => 'required|integer',
             'nilai_review' => 'required|string',
             'review_pengunjung' => 'required|string',
         ]);
@@ -44,7 +39,7 @@ class ReviewController extends Controller
             'nama' => $request->nama,
             'jumlah_pengunjung' => $request->jumlah_pengunjung,
             'asal_pengunjung' => $request->asal_pengunjung,
-            'activity_id' => $request->activity_id,
+            'aktivitas_id' => $request->aktivitas_id,
             'nilai_review' => $request->nilai_review,
             'review_pengunjung' => $request->review_pengunjung,
         ]);
@@ -57,8 +52,8 @@ class ReviewController extends Controller
     public function edit(review $review)
     {
         $type_menu = 'review';
-        $activities = activity::all();
-        return view('pages.review.edit', compact('type_menu', 'review','activities'));
+
+        return view('pages.review.edit', compact('type_menu', 'review'));
     }
 
     /**
@@ -70,7 +65,7 @@ class ReviewController extends Controller
             'nama' => 'required|string',
             'jumlah_pengunjung' => 'required|string',
             'asal_pengunjung' => 'required|string',
-            'activity_id' => 'required',
+            'aktivitas_id' => 'required|integer',
             'nilai_review' => 'required|string',
             'review_pengunjung' => 'required|string',
         ]);
@@ -79,7 +74,7 @@ class ReviewController extends Controller
             'nama' => $request->nama,
             'jumlah_pengunjung' => $request->jumlah_pengunjung,
             'asal_pengunjung' => $request->asal_pengunjung,
-            'activity_id' => $request->activity_id,
+            'aktivitas_id' => $request->aktivitas_id,
             'nilai_review' => $request->nilai_review,
             'review_pengunjung' => $request->review_pengunjung,
         ]);
@@ -94,33 +89,5 @@ class ReviewController extends Controller
     {
         $review->delete();
         return Redirect::route('reviews.index')->with('danger', 'Review berhasil di hapus.');
-    }
-    public function input()
-    {
-        $type_menu = 'review';
-        $activities = activity::all();
-
-        return view('pages.review.input', compact('type_menu', 'activities'));
-    }
-    public function stores(Request $request)
-    {
-        $request->validate([
-            'nama' => 'required|string',
-            'jumlah_pengunjung' => 'required|string',
-            'asal_pengunjung' => 'required|string',
-            'activity_id' => 'required|integer',
-            'nilai_review' => 'required|string',
-            'review_pengunjung' => 'required|string',
-        ]);
-
-        review::create([
-            'nama' => $request->nama,
-            'jumlah_pengunjung' => $request->jumlah_pengunjung,
-            'asal_pengunjung' => $request->asal_pengunjung,
-            'activity_id' => $request->activity_id,
-            'nilai_review' => $request->nilai_review,
-            'review_pengunjung' => $request->review_pengunjung,
-        ]);
-        return Redirect::route('review.input')->with('success', ' Review berhasil di tambah.');
     }
 }

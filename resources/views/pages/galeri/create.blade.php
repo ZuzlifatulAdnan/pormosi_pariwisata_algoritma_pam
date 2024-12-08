@@ -3,9 +3,6 @@
 @section('title', 'Galeri')
 
 @push('style')
-    <!-- CSS Libraries -->
-    {{-- <link rel="stylesheet" href="{{ asset('library/jqvmap/dist/jqvmap.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('library/summernote/dist/summernote-bs4.min.css') }}"> --}}
 @endpush
 
 @section('main')
@@ -16,14 +13,6 @@
                     <div class="col-12 col-md-6 order-md-1 order-last">
                         <h3>Tambah Galeri</h3>
                         <p class="text-subtitle text-muted">Halaman tempat pengguna dapat menambah informasi Galeri.</p>
-                    </div>
-                    <div class="col-12 col-md-6 order-md-2 order-first">
-                        {{-- <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
-                            <ol class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="{{ route('home') }}">Dashboard</a></li>
-                                <li class="breadcrumb-item active" aria-current="page">Profile</li>
-                            </ol>
-                        </nav> --}}
                     </div>
                 </div>
             </div>
@@ -45,7 +34,8 @@
                                     <!-- Type -->
                                     <div class="form-group">
                                         <label for="type">Type</label>
-                                        <select name="type" id="type" class="form-control @error('type') is-invalid @enderror"
+                                        <select name="type" id="type"
+                                            class="form-control @error('type') is-invalid @enderror"
                                             onchange="toggleInput()" required>
                                             <option value="">Pilih Tipe</option>
                                             <option value="Foto">Foto</option>
@@ -72,12 +62,20 @@
                                     <!-- Input Khusus Vidio -->
                                     <div class="form-group" id="inputVidio" style="display: none;">
                                         <label for="vidio">Key Vidio YouTube</label>
-                                        <input type="text" name="vidio" id="vidio" 
+                                        <input type="text" name="vidio" id="vidio"
                                             class="form-control @error('vidio') is-invalid @enderror"
-                                            value="{{ old('vidio', $galeri->vidio ?? '') }}" placeholder="Masukkan Key Vidio YouTube">
+                                            value="{{ old('vidio', $galeri->vidio ?? '') }}"
+                                            placeholder="Masukkan Key Vidio YouTube"
+                                            oninput="updateVideoPreview(this.value)">
                                         @error('vidio')
                                             <div class="invalid-feedback">{{ $message }}</div>
                                         @enderror
+                                        <!-- Video Preview -->
+                                        <div id="videoPreview" style="margin-top: 15px; display: none;">
+                                            <iframe id="youtubeEmbed" width="560" height="315" frameborder="0"
+                                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                                allowfullscreen></iframe>
+                                        </div>
                                     </div>
                                     <div class="form-group">
                                         <button type="submit" class="btn btn-primary">Simpan</button>
@@ -93,10 +91,9 @@
 @endsection
 
 @push('scripts')
-
     <!-- Page Specific JS File -->
     <script>
-         function toggleInput() {
+        function toggleInput() {
             const type = document.getElementById('type').value;
             const uploadFoto = document.getElementById('uploadFoto');
             const inputVidio = document.getElementById('inputVidio');
@@ -112,12 +109,28 @@
                 inputVidio.style.display = 'none';
             }
         }
+
         function previewImage(event) {
             const reader = new FileReader();
             reader.onload = function() {
                 document.getElementById('imagePreview').src = reader.result; // Update the image preview
             };
             reader.readAsDataURL(event.target.files[0]); // Read the selected file as Data URL
+        }
+        // Update video preview based on the entered key
+        function updateVideoPreview(videoKey) {
+            const videoPreview = document.getElementById('videoPreview');
+            const youtubeEmbed = document.getElementById('youtubeEmbed');
+
+            if (videoKey.trim() === '') {
+                videoPreview.style.display = 'none';
+                youtubeEmbed.src = '';
+                return;
+            }
+
+            const embedUrl = `https://www.youtube.com/embed/${videoKey}`;
+            youtubeEmbed.src = embedUrl;
+            videoPreview.style.display = 'block';
         }
     </script>
 @endpush

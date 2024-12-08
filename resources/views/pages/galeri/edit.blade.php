@@ -34,7 +34,7 @@
                             <div class="card-body">
                                 <form action="{{ route('galeris.update', $galeri) }}" method="POST"
                                     enctype="multipart/form-data">
-                                    @method('Patch')
+                                    @method('PATCH')
                                     @csrf
                                     <div class="form-group">
                                         <label for="nama">Nama</label>
@@ -86,10 +86,19 @@
                                         <input type="text" name="vidio" id="vidio"
                                             class="form-control @error('vidio') is-invalid @enderror"
                                             value="{{ old('vidio', $galeri->vidio) }}"
-                                            placeholder="Masukkan Key Vidio YouTube">
+                                            placeholder="Masukkan Key Vidio YouTube"
+                                            oninput="updateVideoPreview(this.value)">
                                         @error('vidio')
                                             <div class="invalid-feedback">{{ $message }}</div>
                                         @enderror
+                                    </div>
+
+                                    <!-- Video Preview -->
+                                    <div id="videoPreview"
+                                        style="margin-top: 15px; display: {{ old('type', $galeri->type) === 'Vidio' && $galeri->vidio ? 'block' : 'none' }};">
+                                        <iframe id="youtubeEmbed" width="560" height="315" frameborder="0"
+                                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                            allowfullscreen></iframe>
                                     </div>
 
                                     <div class="form-group">
@@ -112,16 +121,24 @@
             const type = document.getElementById('type').value;
             const uploadFoto = document.getElementById('uploadFoto');
             const inputVidio = document.getElementById('inputVidio');
+            const videoPreview = document.getElementById('videoPreview');
+            const youtubeEmbed = document.getElementById('youtubeEmbed');
 
             if (type === 'Foto') {
                 uploadFoto.style.display = 'block';
                 inputVidio.style.display = 'none';
+                videoPreview.style.display = 'none';
+                youtubeEmbed.src = '';
             } else if (type === 'Vidio') {
                 uploadFoto.style.display = 'none';
                 inputVidio.style.display = 'block';
+                const videoKey = document.getElementById('vidio').value;
+                updateVideoPreview(videoKey);
             } else {
                 uploadFoto.style.display = 'none';
                 inputVidio.style.display = 'none';
+                videoPreview.style.display = 'none';
+                youtubeEmbed.src = '';
             }
         }
 
@@ -131,6 +148,21 @@
                 document.getElementById('imagePreview').src = reader.result; // Update the image preview
             };
             reader.readAsDataURL(event.target.files[0]); // Read the selected file as Data URL
+        }
+
+        function updateVideoPreview(videoKey) {
+            const videoPreview = document.getElementById('videoPreview');
+            const youtubeEmbed = document.getElementById('youtubeEmbed');
+
+            if (videoKey.trim() === '') {
+                videoPreview.style.display = 'none';
+                youtubeEmbed.src = '';
+                return;
+            }
+
+            const embedUrl = `https://www.youtube.com/embed/${videoKey}`;
+            youtubeEmbed.src = embedUrl;
+            videoPreview.style.display = 'block';
         }
     </script>
 @endpush

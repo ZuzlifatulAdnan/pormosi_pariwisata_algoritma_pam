@@ -1,11 +1,8 @@
 @extends('layouts.app')
 
-@section('title', 'Materi')
+@section('title', 'Review')
 
 @push('style')
-    <!-- CSS Libraries -->
-    {{-- <link rel="stylesheet" href="{{ asset('library/jqvmap/dist/jqvmap.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('library/summernote/dist/summernote-bs4.min.css') }}"> --}}
     <link rel="stylesheet" href="{{ asset('assets/extensions/choices.js/public/assets/styles/choices.css') }}">
 @endpush
 
@@ -15,17 +12,8 @@
             <div class="page-title">
                 <div class="row">
                     <div class="col-12 col-md-6 order-md-1 order-last">
-                        <h3>Edit Materi</h3>
-                        <p class="text-subtitle text-muted">Halaman tempat pengguna dapat mengubah informasi Materi.
-                        </p>
-                    </div>
-                    <div class="col-12 col-md-6 order-md-2 order-first">
-                        {{-- <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
-                            <ol class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="{{ route('home') }}">Dashboard</a></li>
-                                <li class="breadcrumb-item active" aria-current="page">Profile</li>
-                            </ol>
-                        </nav> --}}
+                        <h3>Edit Review</h3>
+                        <p class="text-subtitle text-muted">Halaman tempat pengguna dapat mengedit informasi Review.</p>
                     </div>
                 </div>
             </div>
@@ -34,95 +22,86 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-body">
-                                <form action="{{ route('materi.update', $materi) }}" method="POST"
-                                    enctype="multipart/form-data">
-                                    @method('PUT')
+                                <form action="{{ route('reviews.update', $review->id) }}" method="POST" enctype="multipart/form-data">
                                     @csrf
+                                    @method('PUT') <!-- Add the PUT method to indicate updating -->
+                                    
                                     <div class="row">
                                         <div class="form-group col-12 col-lg-6">
-                                            <label for="mapel_id" class="form-label">Mata Pelajaran</label>
-                                            <select class="choices form-select" name="mapel_id" id="mapel_id">
-                                                @foreach ($mapels as $mapel)
-                                                    <option value="{{ $mapel->id }}"
-                                                        {{ $mapel->id == $materi->mapel_id ? 'selected' : '' }}>
-                                                        {{ $mapel->name }}</option>
+                                            <label for="nama" class="form-label">Nama</label>
+                                            <input type="text" name="nama" id="nama"
+                                                class="form-control @error('nama') is-invalid @enderror"
+                                                value="{{ old('nama', $review->nama) }}" placeholder="Masukkan Nama Review" required>
+                                            @error('nama')
+                                                <div class="invalid-feedback">{{ $message }}</div>
+                                            @enderror
+                                        </div>
+                                        <div class="form-group col-12 col-lg-6">
+                                            <label for="jumlah_pengunjung" class="form-label">Jumlah Pengunjung</label>
+                                            <input type="number" name="jumlah_pengunjung" id="jumlah_pengunjung"
+                                                class="form-control @error('jumlah_pengunjung') is-invalid @enderror"
+                                                value="{{ old('jumlah_pengunjung', $review->jumlah_pengunjung) }}" placeholder="Masukkan Jumlah Pengunjung" required>
+                                            @error('jumlah_pengunjung')
+                                                <div class="invalid-feedback">{{ $message }}</div>
+                                            @enderror
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="form-group col-12 col-lg-4">
+                                            <label for="asal_pengunjung" class="form-label">Asal Pengunjung</label>
+                                            <input type="text" name="asal_pengunjung" id="asal_pengunjung"
+                                                class="form-control @error('asal_pengunjung') is-invalid @enderror"
+                                                value="{{ old('asal_pengunjung', $review->asal_pengunjung) }}" placeholder="Contoh: Kota A, Kota B" required>
+                                            @error('asal_pengunjung')
+                                                <div class="invalid-feedback">{{ $message }}</div>
+                                            @enderror
+                                        </div>
+
+                                        <div class="form-group col-12 col-lg-4">
+                                            <label for="activity_id" class="form-label">Aktivitas</label>
+                                            <select name="activity_id" id="activity_id"
+                                                class="form-control @error('activity_id') is-invalid @enderror" required>
+                                                <option value="" disabled>Pilih Aktivitas</option>
+                                                @foreach ($activities as $activity)
+                                                    <option value="{{ $activity->id }}" 
+                                                        @selected($review->activity_id == $activity->id)>
+                                                        {{ $activity->nama }}
+                                                    </option>
                                                 @endforeach
                                             </select>
+                                            @error('activity_id')
+                                                <div class="invalid-feedback">{{ $message }}</div>
+                                            @enderror
                                         </div>
 
-                                        <div class="form-group col-12 col-lg-6">
-                                            <label for="judul_materi" class="form-label">Judul Materi</label>
-                                            <input type="text" name="judul_materi" id="judul_materi"
-                                                class="form-control @error('judul_materi') is-invalid
-
-                                            @enderror"
-                                                placeholder="Judul Materi" value="{{ $materi->materi }}" required>
-                                            @error('judul_materi')
-                                                <div class="invalid-feedback">
-                                                    {{ $message }}
-                                                </div>
+                                        <div class="form-group col-12 col-lg-4">
+                                            <label for="rating" class="form-label">Rating</label>
+                                            <select name="nilai_review" id="rating"
+                                                class="form-control @error('rating') is-invalid @enderror" required>
+                                                <option value="" disabled>Pilih Rating</option>
+                                                <option value="1" @selected($review->nilai_review == 1)>1 - Sangat Buruk</option>
+                                                <option value="2" @selected($review->nilai_review == 2)>2 - Buruk</option>
+                                                <option value="3" @selected($review->nilai_review == 3)>3 - Cukup</option>
+                                                <option value="4" @selected($review->nilai_review == 4)>4 - Baik</option>
+                                                <option value="5" @selected($review->nilai_review == 5)>5 - Sangat Baik</option>
+                                            </select>
+                                            @error('rating')
+                                                <div class="invalid-feedback">{{ $message }}</div>
                                             @enderror
                                         </div>
                                     </div>
 
                                     <div class="row">
-                                        <div class="form-group col-12 col-lg-3">
-                                            <label for="semester" class="form-label">Semester</label>
-                                            <input type="number" name="semester" id="semester"
-                                                class="form-control @error('semester') is-invalid
-
-                                            @enderror"
-                                                placeholder="Ex 1/2/3" value="{{ $materi->semester }}" required>
-                                            @error('semester')
-                                                <div class="invalid-feedback">
-                                                    {{ $message }}
-                                                </div>
-                                            @enderror
-                                        </div>
-
-                                        <div class="form-group col-12 col-lg-3">
-                                            <label for="pertemuan" class="form-label">Pertemuan</label>
-                                            <input type="number" name="pertemuan" id="pertemuan"
-                                                class="form-control @error('pertemuan') is-invalid
-
-                                            @enderror"
-                                                placeholder="Ex 1/2/3" value="{{ $materi->pertemuan }}" required>
-                                            @error('pertemuan')
-                                                <div class="invalid-feedback">
-                                                    {{ $message }}
-                                                </div>
-                                            @enderror
-                                        </div>
-
-                                        <div class="form-group col-12 col-lg-3">
-                                            <label for="link_youtube" class="form-label">Link Vidio</label>
-                                            <input type="text" name="link_youtube" id="link_youtube"
-                                                class="form-control @error('link_youtube') is-invalid
-
-                                            @enderror"
-                                                placeholder="" value="{{ $materi->link_youtube }}" required>
-                                            @error('link_youtube')
-                                                <div class="invalid-feedback">
-                                                    {{ $message }}
-                                                </div>
-                                            @enderror
-                                        </div>
-
-                                        <div class="form-group col-12 col-lg-3">
-                                            <label for="file_materi" class="form-label">File Materi</label>
-                                            <input type="file" name="file_materi" id="file_materi"
-                                                class="form-control @error('file_materi') is-invalid
-
-                                            @enderror"
-                                                placeholder="">
-                                            @error('file_materi')
-                                                <div class="invalid-feedback">
-                                                    {{ $message }}
-                                                </div>
+                                        <div class="form-group col-12">
+                                            <label for="review_pengunjung" class="form-label">Review Pengunjung</label>
+                                            <textarea name="review_pengunjung" id="review_pengunjung"
+                                                class="form-control @error('review_pengunjung') is-invalid @enderror" placeholder="Masukkan Review" required>{{ old('review_pengunjung', $review->review_pengunjung) }}</textarea>
+                                            @error('review_pengunjung')
+                                                <div class="invalid-feedback">{{ $message }}</div>
                                             @enderror
                                         </div>
                                     </div>
-
 
                                     <div class="form-group">
                                         <button type="submit" class="btn btn-primary">Simpan</button>
@@ -138,16 +117,5 @@
 @endsection
 
 @push('scripts')
-    <!-- JS Libraies -->
     <script src="{{ asset('assets/extensions/choices.js/public/assets/scripts/choices.js') }}"></script>
-    <script src="{{ asset('assets/static/js/pages/form-element-select.js') }}"></script>
-    {{-- <script src="{{ asset('assets/extensions/perfect-scrollbar/perfect-scrollbar.min.js') }}"></script> --}}
-
-
-    {{-- <script src="{{ asset('assets/compiled/js/app.js') }}"></script> --}}
-    {{-- <script src="{{ asset('assets/extensions/apexcharts/apexcharts.min.js') }}"></script>
-    <script src="{{ asset('assets/static/js/pages/dashboard.js') }}"></script> --}}
-
-
-    <!-- Page Specific JS File -->
 @endpush

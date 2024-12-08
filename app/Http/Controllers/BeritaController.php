@@ -9,12 +9,34 @@ use Illuminate\Support\Facades\Redirect;
 
 class BeritaController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         $type_menu = 'berita';
-        $beritas = berita::latest()->get();
+        // $beritas = berita::latest()->get();
+         // Main
+         $keyword = $request->input('judul'); // Search by news title
+         $kategoriId = $request->input('kategori_berita_id'); // Filter by category
+ 
+         // Fetch news (berita) based on the category and search keyword
+         $beritas = Berita::when($kategoriId, function ($query) use ($kategoriId) {
+             $query->where('kategori_berita_id', $kategoriId);
+         })
+             ->when($keyword, function ($query) use ($keyword) {
+                 $query->where(function ($q) use ($keyword) {
+                     $q->where('judul', 'like', '%' . $keyword . '%')
+                         ->orWhere('deskripsi', 'like', '%' . $keyword . '%');
+                 });
+             })
+             ->latest()
+             ->paginate(9); // You can change the pagination number as needed
+ 
+         // Append the search term and category for pagination links
+         $beritas->appends(['judul' => $keyword, 'kategori_berita_id' => $kategoriId]);
+ 
+         // Fetch all categories
+         $kategori_berita = kategori_berita::all();
 
-        return view('pages.berita.index', compact('type_menu', 'beritas'));
+        return view('pages.berita.index', compact('type_menu', 'beritas', 'kategori_berita'));
     }
 
     public function create()
@@ -23,7 +45,23 @@ class BeritaController extends Controller
         $kategoriBerita = kategori_berita::all();
         return view('pages.berita.create', compact('type_menu', 'kategoriBerita'));
     }
+    public function show($id)
+    {
+        $type_menu = 'berita';
+        // Main
+        $berita = Berita::find($id);
 
+        // Check if the news article exists
+        if (!$berita) {
+            return abort(404, 'Berita tidak ditemukan.');
+        }
+        return view('pages.berita.show', [
+            // Main
+            'berita' => $berita,
+            'type_menu' => $type_menu,
+
+        ]);
+    }
     /**
      * Store a newly created resource in storage.
      */
