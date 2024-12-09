@@ -2,23 +2,25 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\activity;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
 
 class ActivityController extends Controller
 {
     public function index()
     {
         $type_menu = 'review';
-        $reviews = review::all();
+        $activitys = activity::all();
 
-        return view('pages.review.index', compact('type_menu', 'reviews'));
+        return view('pages.activity.index', compact('type_menu', 'activitys'));
     }
 
     public function create()
     {
         $type_menu = 'review';
 
-        return view('pages.review.create', compact('type_menu'));
+        return view('pages.activity.create', compact('type_menu'));
     }
 
     /**
@@ -27,67 +29,47 @@ class ActivityController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'nama' => 'required|string',
-            'jumlah_pengunjung' => 'required|string',
-            'asal_pengunjung' => 'required|string',
-            'aktivitas_id' => 'required|integer',
-            'nilai_review' => 'required|string',
-            'review_pengunjung' => 'required|string',
+            'nama' => 'required|string'
         ]);
 
-        review::create([
-            'nama' => $request->nama,
-            'jumlah_pengunjung' => $request->jumlah_pengunjung,
-            'asal_pengunjung' => $request->asal_pengunjung,
-            'aktivitas_id' => $request->aktivitas_id,
-            'nilai_review' => $request->nilai_review,
-            'review_pengunjung' => $request->review_pengunjung,
+        activity::create([
+            'nama' => $request->nama
         ]);
-        return Redirect::route('reviews.index')->with('success', ' Review berhasil di tambah.');
+        return Redirect::route('activity.index')->with('success', ' Activity berhasil di tambah.');
     }
 
     /**
      * Display the specified resource.
      */
-    public function edit(review $review)
+    public function edit(activity $activity)
     {
         $type_menu = 'review';
 
-        return view('pages.review.edit', compact('type_menu', 'review'));
+        return view('pages.activity.edit', compact('type_menu', 'activity'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, review $review)
+    public function update(Request $request, activity $activity)
     {
         $request->validate([
-            'nama' => 'required|string',
-            'jumlah_pengunjung' => 'required|string',
-            'asal_pengunjung' => 'required|string',
-            'aktivitas_id' => 'required|integer',
-            'nilai_review' => 'required|string',
-            'review_pengunjung' => 'required|string',
+            'nama' => 'required|string'
         ]);
 
-        $review->update([
-            'nama' => $request->nama,
-            'jumlah_pengunjung' => $request->jumlah_pengunjung,
-            'asal_pengunjung' => $request->asal_pengunjung,
-            'aktivitas_id' => $request->aktivitas_id,
-            'nilai_review' => $request->nilai_review,
-            'review_pengunjung' => $request->review_pengunjung,
+        $activity->update([
+            'nama' => $request->nama
         ]);
 
-        return Redirect::route('reviews.index')->with('success', 'Review berhasil di ubah.');
+        return Redirect::route('activity.index')->with('success', 'Activity berhasil di ubah.');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(review $review)
+    public function destroy(activity $activity)
     {
-        $review->delete();
-        return Redirect::route('reviews.index')->with('danger', 'Review berhasil di hapus.');
+        $activity->delete();
+        return Redirect::route('activity.index')->with('danger', 'Activity berhasil di hapus.');
     }
 }

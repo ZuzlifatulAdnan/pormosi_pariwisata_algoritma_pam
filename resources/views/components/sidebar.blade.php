@@ -81,6 +81,9 @@
                             <span>Review</span>
                         </a>
                         <ul class="submenu ">
+                            <li class="submenu-item {{ Request::is('activity') ? 'active' : '' }}">
+                                <a href="{{ route('activity.index') }}" class="submenu-link">Activity</a>
+                            </li>
                             <li class="submenu-item {{ Request::is('reviews') ? 'active' : '' }}">
                                 <a href="{{ route('reviews.index') }}" class="submenu-link">Review</a>
                             </li>

@@ -26,6 +26,15 @@
             });
         @endif
 
+        @if (session('danger'))
+            Swal.fire({
+                title: 'Berhasil!',
+                text: '{{ session("danger") }}',
+                icon: 'success',
+                confirmButtonText: 'Coba Lagi'
+            });
+        @endif
+        
         @if (session('error'))
             Swal.fire({
                 title: 'Gagal!',
