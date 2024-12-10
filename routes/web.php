@@ -3,6 +3,7 @@
 use App\Http\Controllers\ActivityController;
 use App\Http\Controllers\BerandaController;
 use App\Http\Controllers\BeritaController;
+use App\Http\Controllers\ClusteringController;
 use App\Http\Controllers\GaleriController;
 use App\Http\Controllers\KategoriBeritaController;
 use App\Http\Controllers\pamController;
@@ -31,16 +32,16 @@ Route::get('/foto', [GaleriController::class, 'foto'])->name('galeri.foto');
 Route::get('/vidio', [GaleriController::class, 'vidio'])->name('galeri.vidio');
 
 Route::middleware(['auth'])->group(function () {
-    Route::resource('berandas',BerandaController ::class);
-    Route::resource('profile',ProfileController ::class);
-    Route::resource('beritas',BeritaController ::class);
-    Route::resource('kategori_berita',KategoriBeritaController ::class);
-    Route::resource('reviews',ReviewController ::class);
-    Route::resource('user',UserController ::class);
-    Route::resource('galeris',GaleriController ::class);
-    Route::resource('profile',ProfileController ::class);
-    Route::resource('activity', ActivityController ::class);
-    Route::resource('pam',pamController::class);
+    Route::resource('berandas', BerandaController::class);
+    Route::resource('profile', ProfileController::class);
+    Route::resource('beritas', BeritaController::class);
+    Route::resource('kategori_berita', KategoriBeritaController::class);
+    Route::resource('reviews', ReviewController::class);
+    Route::resource('user', UserController::class);
+    Route::resource('galeris', GaleriController::class);
+    Route::resource('profile', ProfileController::class);
+    Route::resource('activity', ActivityController::class);
+    Route::resource('pam', pamController::class);
     Route::post('/profile/update/{user}', [ProfileController::class, 'update'])->name('profile.update');
     Route::post('profile/change-password/{user}', [ProfileController::class, 'changePassword'])->name('profile.change-password');
 });

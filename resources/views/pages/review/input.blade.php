@@ -47,7 +47,7 @@
                                     </div>
 
                                     <div class="row">
-                                        <div class="form-group col-12 col-lg-4">
+                                        <div class="form-group col-12 col-lg-6">
                                             <label for="asal_pengunjung" class="form-label">Asal Pengunjung</label>
                                             <input type="text" name="asal_pengunjung" id="asal_pengunjung"
                                                 class="form-control @error('asal_pengunjung') is-invalid @enderror"
@@ -57,7 +57,7 @@
                                             @enderror
                                         </div>
 
-                                        <div class="form-group col-12 col-lg-4">
+                                        <div class="form-group col-12 col-lg-6">
                                             <label for="activity_id" class="form-label">Aktivitas</label>
                                             <select name="activity_id" id="activity_id"
                                                 class="form-control @error('activity_id') is-invalid @enderror" required>
@@ -67,22 +67,6 @@
                                                 @endforeach
                                             </select>
                                             @error('activity_id')
-                                                <div class="invalid-feedback">{{ $message }}</div>
-                                            @enderror
-                                        </div>
-
-                                        <div class="form-group col-12 col-lg-4">
-                                            <label for="rating" class="form-label">Rating</label>
-                                            <select name="nilai_review" id="rating"
-                                                class="form-control @error('rating') is-invalid @enderror" required>
-                                                <option value="" disabled selected>Pilih Rating</option>
-                                                <option value="1">1 - Sangat Buruk</option>
-                                                <option value="2">2 - Buruk</option>
-                                                <option value="3">3 - Cukup</option>
-                                                <option value="4">4 - Baik</option>
-                                                <option value="5">5 - Sangat Baik</option>
-                                            </select>
-                                            @error('rating')
                                                 <div class="invalid-feedback">{{ $message }}</div>
                                             @enderror
                                         </div>

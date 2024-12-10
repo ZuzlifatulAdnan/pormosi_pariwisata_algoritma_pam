@@ -88,7 +88,7 @@
                                 <a href="{{ route('reviews.index') }}" class="submenu-link">Review</a>
                             </li>
                             <li class="submenu-item {{ Request::is('hasil-pam') ? 'active' : '' }} ">
-                                <a href="{{ route('pam.index') }}" class="submenu-link">Hasil Algoritma PAM</a>
+                                <a href="{{ route('pam.index') }}" class="submenu-link">Hasil Algoritma PAM </a>
                             </li>
                         </ul>
                     </li>

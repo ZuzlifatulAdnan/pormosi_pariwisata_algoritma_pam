@@ -64,7 +64,7 @@
                                                 <td>{{ Str::limit($review->asal_pengunjung, 25) }}</td>
                                                 <td class="text-center">{{ $review->activity->nama }}</td>
                                                 <td>{{ Str::limit($review->review_pengunjung, 20) }}</td>
-                                                <td>{{ $review->created_at }}</td>
+                                                <td>{{ $review->created_at  }}</td>
                                                 <td class="content-center">
                                                     <div class="d-flex justify-content-center">
                                                         <a href="{{ route('reviews.edit', $review) }}"

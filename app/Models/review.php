@@ -13,8 +13,9 @@ class review extends Model
         'jumlah_pengunjung',
         'asal_pengunjung',
         'activity_id',
-        'nilai_review',
-        'review_pengunjung'
+        // 'nilai_review',
+        'review_pengunjung',
+        'cluster'
     ];
     public function activity()
     {
