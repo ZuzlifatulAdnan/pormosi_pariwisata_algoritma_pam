@@ -12,30 +12,34 @@ class BeritaController extends Controller
     public function index(Request $request)
     {
         $type_menu = 'berita';
-        // $beritas = berita::latest()->get();
-         // Main
-         $keyword = $request->input('judul'); // Search by news title
-         $kategoriId = $request->input('kategori_berita_id'); // Filter by category
- 
-         // Fetch news (berita) based on the category and search keyword
-         $beritas = Berita::when($kategoriId, function ($query) use ($kategoriId) {
-             $query->where('kategori_berita_id', $kategoriId);
-         })
-             ->when($keyword, function ($query) use ($keyword) {
-                 $query->where(function ($q) use ($keyword) {
-                     $q->where('judul', 'like', '%' . $keyword . '%')
-                         ->orWhere('deskripsi', 'like', '%' . $keyword . '%');
-                 });
-             })
-             ->latest()
-             ->paginate(9); // You can change the pagination number as needed
- 
-         // Append the search term and category for pagination links
-         $beritas->appends(['judul' => $keyword, 'kategori_berita_id' => $kategoriId]);
- 
-         // Fetch all categories
-         $kategori_berita = kategori_berita::all();
 
+        // Mengambil input untuk pencarian dan filter
+        $keyword = $request->input('judul'); // Kata kunci pencarian berdasarkan judul
+        $kategoriId = $request->input('kategori_berita_id'); // Filter berdasarkan kategori
+
+        // Query berita berdasarkan pencarian dan filter
+        $beritas = Berita::query()
+            ->when($kategoriId, function ($query) use ($kategoriId) {
+                $query->where('kategori_berita_id', $kategoriId);
+            })
+            ->when($keyword, function ($query) use ($keyword) {
+                $query->where(function ($q) use ($keyword) {
+                    $q->where('judul', 'like', '%' . $keyword . '%')
+                        ->orWhere('deskripsi', 'like', '%' . $keyword . '%');
+                });
+            })
+            ->latest()
+            ->paginate(9); // Sesuaikan jumlah item per halaman
+
+        // Menambahkan parameter pencarian ke pagination
+        $beritas->appends([
+            'judul' => $keyword,
+            'kategori_berita_id' => $kategoriId,
+        ]);
+
+        // Mengambil semua kategori berita
+        $kategori_berita = kategori_berita::all();
+        
         return view('pages.berita.index', compact('type_menu', 'beritas', 'kategori_berita'));
     }
 
@@ -85,7 +89,7 @@ class BeritaController extends Controller
             'deskripsi' => $request->deskripsi,
             'image' => $imagePath,
         ]);
-    
+
         return Redirect::route('beritas.index')->with('success', 'Berita berhasil di tambah.');
     }
 

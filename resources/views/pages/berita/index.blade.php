@@ -111,20 +111,18 @@
                                 <form action="{{ route('berita.index') }}" method="GET"
                                     class="d-flex align-items-center">
                                     <div class="input-group">
-                                        <input type="text" name="search" class="form-control"
-                                            placeholder="Cari berita..." value="{{ request('search') }}">
-
-                                        <select name="kategori_berita_id" class="form-select" onchange="this.form.submit()">
-                                            <option value="" {{ request('kategori') == '' ? 'selected' : '' }}>Semua
-                                                Kategori</option>
+                                        <select name="kategori_berita_id" class="form-control"
+                                            onchange="this.form.submit()">
+                                            <option value="">Semua Kategori</option>
                                             @foreach ($kategori_berita as $kategori)
                                                 <option value="{{ $kategori->id }}"
-                                                    {{ request('kategori') == $kategori->id ? 'selected' : '' }}>
+                                                    {{ request('kategori_berita_id') == $kategori->id ? 'selected' : '' }}>
                                                     {{ $kategori->nama }}
                                                 </option>
                                             @endforeach
                                         </select>
-
+                                        <input type="text" class="form-control" placeholder="Search" name="judul"
+                                            value="{{ request('judul') }}">
                                         <button type="submit" class="btn btn-primary">
                                             <i class="bi bi-search"></i> Cari
                                         </button>
