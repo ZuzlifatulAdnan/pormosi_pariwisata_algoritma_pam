@@ -17,7 +17,6 @@ return new class extends Migration
             $table->string('jumlah_pengunjung');
             $table->string('asal_pengunjung');
             $table->foreignId('activity_id')->constrained('activities')->cascadeOnDelete()->cascadeOnUpdate();
-            // $table->string('nilai_review');
             $table->text('review_pengunjung');
             $table->integer('cluster')->nullable();
             $table->timestamps();

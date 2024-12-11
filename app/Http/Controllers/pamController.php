@@ -6,9 +6,38 @@ use Phpml\Clustering\KMeans;
 use Phpml\Clustering\KMedoids;
 use App\Models\Review;
 use Illuminate\Http\Request;
+use App\Exports\ClusterExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class pamController extends Controller
 {
+    // Export to Excel
+    public function export(Request $request)
+    {
+        // Recalculate clusters and samples
+        $reviews = Review::all();
+        $samples = [];
+        foreach ($reviews as $review) {
+            $samples[] = [
+                'jumlah_pengunjung' => $review->jumlah_pengunjung,
+                'activity_nama' => $review->activity->nama,
+                'activity_id' => $review->activity_id,
+            ];
+        }
+
+        $numClusters = 3;
+        $medoids = $this->initializeMedoids($samples, $numClusters);
+        $clusters = [];
+        $prevMedoids = [];
+        while ($medoids !== $prevMedoids) {
+            $prevMedoids = $medoids;
+            $clusters = $this->assignToClusters($samples, $medoids);
+            $medoids = $this->updateMedoids($samples, $clusters);
+        }
+
+        // Export using ClusterExport
+        return Excel::download(new ClusterExport($clusters, $samples), 'clusters.xlsx');
+    }
     public function index()
     {
         $type_menu= 'review';

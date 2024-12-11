@@ -41,7 +41,9 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('galeris', GaleriController::class);
     Route::resource('profile', ProfileController::class);
     Route::resource('activity', ActivityController::class);
-    Route::resource('pam', pamController::class);
+    // Route::resource('pam', pamController::class);
+    Route::get('/pam', [pamController::class, 'index'])->name('pam.index');
+    Route::get('/pam/export', [pamController::class, 'export'])->name('export.pam');
     Route::post('/profile/update/{user}', [ProfileController::class, 'update'])->name('profile.update');
     Route::post('profile/change-password/{user}', [ProfileController::class, 'changePassword'])->name('profile.change-password');
 });

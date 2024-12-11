@@ -36,11 +36,12 @@
                 <section class="section">
                     <div class="card">
                         <div class="card-header">
-                            {{-- <h5 class="card-title">
-                                <a href="{{ route('reviews.create') }}">
-                                    <button class="btn btn-primary">Tambah Review</button>
+                            <div class="d-flex justify-content-between">
+                                <h5>Data Hasil Algoritma PAM</h5>
+                                <a href="{{ route('export.pam') }}" class="btn btn-success">
+                                    <i class="bi bi-file-earmark-excel"></i> Export Excel
                                 </a>
-                            </h5> --}}
+                            </div>
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
@@ -49,7 +50,7 @@
                                         <tr>
                                             <th class="text-center">No</th>
                                             <th class="text-center">Jumlah Pengunjung</th>
-                                            <th >Aktivitas</th>
+                                            <th>Aktivitas</th>
                                             <th class="text-center">Cluster</th>
                                         </tr>
                                     </thead>
@@ -58,9 +59,11 @@
                                             @foreach ($cluster as $sampleIndex)
                                                 <tr>
                                                     <td class="text-center">{{ $loop->parent->iteration }}</td>
-                                                    <td class="text-center">{{ $samples[$sampleIndex]['jumlah_pengunjung'] }}</td>
-                                                    <td >{{ $samples[$sampleIndex]['activity_nama'] }}</td>
-                                                    <td class="text-center">{{ $clusterId + 1 }}</td> <!-- Menampilkan cluster yang sesuai -->
+                                                    <td class="text-center">
+                                                        {{ $samples[$sampleIndex]['jumlah_pengunjung'] }}</td>
+                                                    <td>{{ $samples[$sampleIndex]['activity_nama'] }}</td>
+                                                    <td class="text-center">{{ $clusterId + 1 }}</td>
+                                                    <!-- Menampilkan cluster yang sesuai -->
                                                 </tr>
                                             @endforeach
                                         @endforeach
