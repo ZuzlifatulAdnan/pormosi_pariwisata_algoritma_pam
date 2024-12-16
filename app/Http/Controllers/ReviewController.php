@@ -16,7 +16,7 @@ class ReviewController extends Controller
     public function index()
     {
         $type_menu = 'review';
-        $reviews = Review::orderBy('cluster')->get();
+        $reviews = Review::latest()->get();
         return view('pages.review.index', compact('type_menu', 'reviews'));
     }
 
@@ -97,6 +97,11 @@ class ReviewController extends Controller
         $review->delete();
         return Redirect::route('reviews.index')->with('danger', 'Review berhasil di hapus.');
     }
+    public function show($id)
+    {
+        $review = Review::find($id);
+        return view('pages.review.detail', ['review' => $review, 'type_menu' => 'master']);
+    }
     public function input()
     {
         $type_menu = 'review';
@@ -123,6 +128,6 @@ class ReviewController extends Controller
             // 'nilai_review' => $request->nilai_review,
             'review_pengunjung' => $request->review_pengunjung,
         ]);
-        return Redirect::route('review.input')->with('success', ' Review berhasil di tambah.');
+        return Redirect::route('review.index')->with('success', ' Review berhasil di tambah.');
     }
 }

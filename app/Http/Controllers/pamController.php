@@ -25,7 +25,7 @@ class pamController extends Controller
             ];
         }
 
-        $numClusters = 3;
+        $numClusters = 2;
         $medoids = $this->initializeMedoids($samples, $numClusters);
         $clusters = [];
         $prevMedoids = [];
@@ -56,7 +56,7 @@ class pamController extends Controller
         }
 
         // Tentukan jumlah cluster (misalnya 3)
-        $numClusters = 3;
+        $numClusters = 2;
 
         // Langkah 1: Inisialisasi Medoids secara acak
         $medoids = $this->initializeMedoids($samples, $numClusters);

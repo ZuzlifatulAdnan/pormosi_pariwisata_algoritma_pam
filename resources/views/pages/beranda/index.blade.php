@@ -143,7 +143,7 @@
         <div class="page-heading">
             <div class="card-body p-0">
                 <!-- Banner dengan ukuran responsif -->
-                <img src="{{ asset('img/logo/banner.png') }}" class="img-fluid w-100" style="object-fit: cover; max-height: 380px;" alt="Hero Banner">
+                <img src="{{ asset('img/logo/bannner.png') }}" class="img-fluid w-100" style="object-fit: cover; max-height: 380px;" alt="Hero Banner">
             </div>
         </div>
         <div class="page-content">
@@ -170,7 +170,7 @@
                             <div class="card mb-4">
                                 <div class="card-body text-center">
                                     <h5>Harga Tiket</h5>
-                                    <p class="h6 text-muted">Rp 25.000</p>
+                                    <p class="h6 text-muted">Rp 15.000</p>
                                 </div>
                             </div>
                         </div>
@@ -204,13 +204,13 @@
                                     <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel">
                                         <div class="carousel-inner">
                                             <div class="carousel-item active">
-                                                <img src="{{ asset('img/logo/spotfoto2.jpg') }}" class="d-block w-100" alt="Foto 1">
+                                                <img src="{{ asset('img/logo/spotfoto.jpg') }}" class="d-block w-100" alt="Foto 1">
                                             </div>
                                             <div class="carousel-item">
-                                                <img src="{{ asset('img/logo/spotfoto3.jpg') }}" class="d-block w-100" alt="Foto 2">
+                                                <img src="{{ asset('img/logo/spotfoto2.jpg') }}" class="d-block w-100" alt="Foto 2">
                                             </div>
                                             <div class="carousel-item">
-                                                <img src="{{ asset('img/logo/spotfoto4.jpg') }}" class="d-block w-100" alt="Foto 3">
+                                                <img src="{{ asset('img/logo/spotfoto3.jpg') }}" class="d-block w-100" alt="Foto 3">
                                             </div>
                                         </div>
                                         <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">

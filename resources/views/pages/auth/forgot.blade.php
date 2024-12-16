@@ -54,7 +54,7 @@
                 </div>
                 <div class="col-lg-7 d-none d-lg-block">
                     <div id="auth-right" class="h-100">
-                        <img src="https://www.darmajaya.ac.id/wp-content/uploads/3-161.jpg" 
+                        <img src="{{ asset('img/logo/auth.jpg') }}" 
                              alt="Sistem Promosi Pariwisata" 
                              class="img-fluid h-100 w-100 object-cover">
                     </div>

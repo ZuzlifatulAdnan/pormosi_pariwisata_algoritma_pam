@@ -101,7 +101,7 @@
                         </ul>
                     </li>
                     <li class="sidebar-item {{ $type_menu == 'review' ? 'active' : '' }}">
-                        <a href="{{ route('review.input') }}" class='sidebar-link'>
+                        <a href="{{ route('review.index') }}" class='sidebar-link'>
                             <i class="bi bi-star-fill"></i>
                             <span>Review</span>
                         </a>
