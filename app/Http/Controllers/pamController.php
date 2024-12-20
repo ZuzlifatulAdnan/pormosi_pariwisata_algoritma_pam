@@ -19,6 +19,7 @@ class pamController extends Controller
         $samples = [];
         foreach ($reviews as $review) {
             $samples[] = [
+                'nama'=> $review->nama,
                 'jumlah_pengunjung' => $review->jumlah_pengunjung,
                 'activity_nama' => $review->activity->nama,
                 'activity_id' => $review->activity_id,
@@ -49,6 +50,7 @@ class pamController extends Controller
         foreach ($reviews as $review) {
             // Ambil jumlah_pengunjung dan activity_id sebagai fitur
             $samples[] = [
+                'nama'=> $review->nama,
                 'jumlah_pengunjung' => $review->jumlah_pengunjung,
                 'activity_nama' => $review->activity->nama,
                 'activity_id' => $review->activity_id,

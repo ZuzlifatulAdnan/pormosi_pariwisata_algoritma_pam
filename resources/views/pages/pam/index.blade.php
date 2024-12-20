@@ -48,7 +48,7 @@
                                 <table class="table" id="table1">
                                     <thead>
                                         <tr>
-                                            <th class="text-center">No</th>
+                                            <th class="text-center">Nama Wisatawan</th>
                                             <th class="text-center">Jumlah Pengunjung</th>
                                             <th>Aktivitas</th>
                                             <th class="text-center">Cluster</th>
@@ -58,7 +58,8 @@
                                         @foreach ($clusters as $clusterId => $cluster)
                                             @foreach ($cluster as $sampleIndex)
                                                 <tr>
-                                                    <td class="text-center">{{ $loop->parent->iteration }}</td>
+                                                    {{-- <td class="text-center">{{ $loop->parent->iteration }}</td> --}}
+                                                    <td class="text-center"> {{ $samples[$sampleIndex]['nama'] }}</td>
                                                     <td class="text-center">
                                                         {{ $samples[$sampleIndex]['jumlah_pengunjung'] }}</td>
                                                     <td>{{ $samples[$sampleIndex]['activity_nama'] }}</td>

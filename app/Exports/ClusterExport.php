@@ -25,9 +25,10 @@ class ClusterExport implements FromArray, WithHeadings
         foreach ($this->clusters as $clusterId => $cluster) {
             foreach ($cluster as $sampleIndex) {
                 $exportData[] = [
-                    'Cluster' => $clusterId + 1,
+                    'Nama Wisatawan' => $this->samples[$sampleIndex]['nama'],
                     'Jumlah Pengunjung' => $this->samples[$sampleIndex]['jumlah_pengunjung'],
                     'Aktivitas' => $this->samples[$sampleIndex]['activity_nama'],
+                    'Cluster' => $clusterId + 1,
                 ];
             }
         }
@@ -37,6 +38,6 @@ class ClusterExport implements FromArray, WithHeadings
     // Define the headings for the Excel sheet
     public function headings(): array
     {
-        return ['Cluster', 'Jumlah Pengunjung', 'Aktivitas'];
+        return [ 'Nama Wisatawan','Jumlah Pengunjung', 'Aktivitas', 'Cluster'];
     }
 }
