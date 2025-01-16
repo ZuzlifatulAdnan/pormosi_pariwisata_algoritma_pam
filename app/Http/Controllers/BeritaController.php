@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\berita;
 use App\Models\kategori_berita;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 
 class BeritaController extends Controller
@@ -13,33 +14,38 @@ class BeritaController extends Controller
     {
         $type_menu = 'berita';
 
-        // Mengambil input untuk pencarian dan filter
-        $keyword = $request->input('judul'); // Kata kunci pencarian berdasarkan judul
-        $kategoriId = $request->input('kategori_berita_id'); // Filter berdasarkan kategori
+        if (Auth::check()) {
+            $beritas = berita::with('kategori_berita')->latest()->get();
+            $kategori_berita = kategori_berita::all();
+        } else {
+            // Mengambil input untuk pencarian dan filter
+            $keyword = $request->input('judul'); // Kata kunci pencarian berdasarkan judul
+            $kategoriId = $request->input('kategori_berita_id'); // Filter berdasarkan kategori
 
-        // Query berita berdasarkan pencarian dan filter
-        $beritas = Berita::query()
-            ->when($kategoriId, function ($query) use ($kategoriId) {
-                $query->where('kategori_berita_id', $kategoriId);
-            })
-            ->when($keyword, function ($query) use ($keyword) {
-                $query->where(function ($q) use ($keyword) {
-                    $q->where('judul', 'like', '%' . $keyword . '%')
-                        ->orWhere('deskripsi', 'like', '%' . $keyword . '%');
-                });
-            })
-            ->latest()
-            ->paginate(9); // Sesuaikan jumlah item per halaman
+            // Query berita berdasarkan pencarian dan filter
+            $beritas = Berita::query()
+                ->when($kategoriId, function ($query) use ($kategoriId) {
+                    $query->where('kategori_berita_id', $kategoriId);
+                })
+                ->when($keyword, function ($query) use ($keyword) {
+                    $query->where(function ($q) use ($keyword) {
+                        $q->where('judul', 'like', '%' . $keyword . '%')
+                            ->orWhere('deskripsi', 'like', '%' . $keyword . '%');
+                    });
+                })
+                ->latest()
+                ->paginate(9); // Sesuaikan jumlah item per halaman
 
-        // Menambahkan parameter pencarian ke pagination
-        $beritas->appends([
-            'judul' => $keyword,
-            'kategori_berita_id' => $kategoriId,
-        ]);
+            // Menambahkan parameter pencarian ke pagination
+            $beritas->appends([
+                'judul' => $keyword,
+                'kategori_berita_id' => $kategoriId,
+            ]);
 
-        // Mengambil semua kategori berita
-        $kategori_berita = kategori_berita::all();
-        
+            // Mengambil semua kategori berita
+            $kategori_berita = kategori_berita::all();
+        }
+
         return view('pages.berita.index', compact('type_menu', 'beritas', 'kategori_berita'));
     }
 
